@@ -18,10 +18,13 @@
 
   <!-- Background overlay when editor or lightbox is open -->
   <div class="lightbox" id="galleryLightbox">
-    <div class="lightbox-content">
+    <div class="lightbox-content" style="display: flex; flex-direction: column; align-items: center;">
       <button class="lightbox-close" id="closeLightbox"><i class="fa-solid fa-xmark"></i></button>
       <img src="" alt="" id="lightboxImg">
       <div class="lightbox-caption" id="lightboxCaption">Legenda da Imagem</div>
+      <a href="" target="_blank" class="lightbox-btn" id="lightboxInfoLink">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Saiba mais sobre a atração
+      </a>
     </div>
   </div>
 
@@ -273,84 +276,92 @@
 
   </section>
 
-  <!-- Photo Gallery Section -->
   <section id="gallery" class="section-padding container">
     <div class="section-title-wrapper">
       <span class="badge badge-primary"><i class="fa-solid fa-images"></i> Inspiração</span>
-      <h2 class="section-title">Galeria de Foz</h2>
+      <h2 class="section-title">Galeria da Tríplice Fronteira</h2>
       <p class="section-subtitle">Uma prévia das paisagens maravilhosas que nos aguardam nesta jornada.</p>
     </div>
     
     <div class="gallery-grid">
-      <div class="gallery-item" onclick="openLightbox('assets/foz_hero.png', 'Cataratas do Iguaçu (Lado Brasileiro) - A maior cortina de água do planeta!')">
+      <div class="gallery-item" onclick="openLightbox('assets/foz_hero.png', 'Cataratas do Iguaçu (Lado Brasileiro) - A maior cortina de água do planeta!', 'https://cataratasdoiguacu.com.br/')">
         <img src="assets/foz_hero.png" alt="Cataratas do Iguaçu">
         <div class="gallery-overlay">
           <h3>As Cataratas do Iguaçu</h3>
           <p>Lado Brasileiro - Vista Panorâmica dos Mirantes</p>
+          <span class="gallery-link-indicator"><i class="fa-solid fa-circle-info"></i> Saiba mais &amp; fotos</span>
         </div>
       </div>
       
-      <div class="gallery-item" onclick="openLightbox('assets/cataratas_argentina.png', 'Cataratas do Iguaçu (Lado Argentino) - Sinta a força e a proximidade da Garganta do Diabo!')">
+      <div class="gallery-item" onclick="openLightbox('assets/cataratas_argentina.png', 'Cataratas do Iguaçu (Lado Argentino) - Sinta a força e a proximidade da Garganta do Diabo!', 'https://www.iguazuargentina.com/')">
         <img src="assets/cataratas_argentina.png" alt="Cataratas Argentinas">
         <div class="gallery-overlay">
           <h3>Cataratas Argentinas</h3>
           <p>Lado Argentino - Passarelas sobre a Garganta do Diabo</p>
+          <span class="gallery-link-indicator"><i class="fa-solid fa-circle-info"></i> Saiba mais &amp; fotos</span>
         </div>
       </div>
 
-      <div class="gallery-item" onclick="openLightbox('assets/marco_fronteiras.png', 'Marco das Três Fronteiras - Pôr do sol espetacular no encontro dos rios Iguaçu e Paraná.')">
+      <div class="gallery-item" onclick="openLightbox('assets/marco_fronteiras.png', 'Marco das Três Fronteiras - Pôr do sol espetacular no encontro dos rios Iguaçu e Paraná.', 'https://marcodastresfronteiras.com.br/')">
         <img src="assets/marco_fronteiras.png" alt="Marco das Três Fronteiras">
         <div class="gallery-overlay">
           <h3>Marco das Três Fronteiras</h3>
           <p>Encontro histórico de três nações e culturas</p>
+          <span class="gallery-link-indicator"><i class="fa-solid fa-circle-info"></i> Saiba mais &amp; fotos</span>
         </div>
       </div>
 
-      <div class="gallery-item" onclick="openLightbox('assets/parque_aves.png', 'Tucano-toco majestoso no Parque das Aves - Contato de pertinho com a natureza.')">
+      <div class="gallery-item" onclick="openLightbox('assets/parque_aves.png', 'Tucano-toco majestoso no Parque das Aves - Contato de pertinho com a natureza.', 'https://www.parquedasaves.com.br/')">
         <img src="assets/parque_aves.png" alt="Parque das Aves">
         <div class="gallery-overlay">
           <h3>Parque das Aves</h3>
           <p>O maior santuário de preservação de aves da América Latina</p>
+          <span class="gallery-link-indicator"><i class="fa-solid fa-circle-info"></i> Saiba mais &amp; fotos</span>
         </div>
       </div>
 
-      <div class="gallery-item" onclick="openLightbox('assets/ciudad_del_este.png', 'Ciudad del Este - Compras e a vibrante atmosfera comercial do Paraguai.')">
+      <div class="gallery-item" onclick="openLightbox('assets/ciudad_del_este.png', 'Ciudad del Este - Compras e a vibrante atmosfera comercial do Paraguai.', 'https://www.comprasparaguai.com.br/')">
         <img src="assets/ciudad_del_este.png" alt="Ciudad del Este">
         <div class="gallery-overlay">
           <h3>Ciudad del Este</h3>
           <p>Paraguai - Um dos maiores centros de compras do mundo</p>
+          <span class="gallery-link-indicator"><i class="fa-solid fa-circle-info"></i> Saiba mais &amp; fotos</span>
         </div>
       </div>
 
-      <div class="gallery-item" onclick="openLightbox('assets/templo_budista.png', 'Templo Budista Chen Tien - Um oásis de silêncio, meditação e estátuas monumentais.')">
+      <div class="gallery-item" onclick="openLightbox('assets/templo_budista.png', 'Templo Budista Chen Tien - Um oásis de silêncio, meditação e estátuas monumentais.', 'https://www.tripadvisor.com.br/Attraction_Review-g303444-d2353116-Reviews-Templo_Budista_Chen_Tien-Foz_do_Iguacu_State_of_Parana.html')">
         <img src="assets/templo_budista.png" alt="Templo Budista Chen Tien">
         <div class="gallery-overlay">
           <h3>Templo Budista Chen Tien</h3>
           <p>Foz do Iguaçu - Espiritualidade e jardins imponentes</p>
+          <span class="gallery-link-indicator"><i class="fa-solid fa-circle-info"></i> Saiba mais &amp; fotos</span>
         </div>
       </div>
 
-      <div class="gallery-item" onclick="openLightbox('assets/itaipu_dam.png', 'Usina de Itaipu Binacional - Um dos maiores monumentos da engenharia moderna.')">
+      <div class="gallery-item" onclick="openLightbox('assets/itaipu_dam.png', 'Usina de Itaipu Binacional - Um dos maiores monumentos da engenharia moderna.', 'https://www.turismoitaipu.com.br/')">
         <img src="assets/itaipu_dam.png" alt="Usina de Itaipu">
         <div class="gallery-overlay">
           <h3>Usina de Itaipu</h3>
           <p>Show de luzes e a grandiosidade da engenharia binacional</p>
+          <span class="gallery-link-indicator"><i class="fa-solid fa-circle-info"></i> Saiba mais &amp; fotos</span>
         </div>
       </div>
 
-      <div class="gallery-item" onclick="openLightbox('assets/la_aripuca.png', 'La Aripuca - Complexo turístico agroecológico feito com árvores gigantes resgatadas em Puerto Iguazú.')">
+      <div class="gallery-item" onclick="openLightbox('assets/la_aripuca.png', 'La Aripuca - Complexo turístico agroecológico feito com árvores gigantes resgatadas em Puerto Iguazú.', 'http://aripuca.com.ar/')">
         <img src="assets/la_aripuca.png" alt="La Aripuca">
         <div class="gallery-overlay">
           <h3>La Aripuca</h3>
           <p>Puerto Iguazú - Monumento ecológico e cultura local</p>
+          <span class="gallery-link-indicator"><i class="fa-solid fa-circle-info"></i> Saiba mais &amp; fotos</span>
         </div>
       </div>
 
-      <div class="gallery-item" onclick="openLightbox('assets/feirinha_puerto.png', 'Feirinha de Puerto Iguazú - Delícias típicas como alfajores, empanadas artesanais e queijos finos.')">
+      <div class="gallery-item" onclick="openLightbox('assets/feirinha_puerto.png', 'Feirinha de Puerto Iguazú - Delícias típicas como alfajores, empanadas artesanais e queijos finos.', 'https://www.tripadvisor.com.br/Attraction_Review-g312806-d8050961-Reviews-La_Feirinha-Puerto_Iguazu_Province_of_Misiones_Valle_del_Litoral.html')">
         <img src="assets/feirinha_puerto.png" alt="Feirinha de Puerto Iguazú">
         <div class="gallery-overlay">
           <h3>Feirinha de Puerto Iguazú</h3>
           <p>Argentina - Sabores tradicionais da culinária portenha</p>
+          <span class="gallery-link-indicator"><i class="fa-solid fa-circle-info"></i> Saiba mais &amp; fotos</span>
         </div>
       </div>
     </div>

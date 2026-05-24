@@ -377,13 +377,22 @@ function setupLightbox() {
   });
 }
 
-function openLightbox(imgSrc, captionText) {
+function openLightbox(imgSrc, captionText, infoUrl) {
   const lightbox = document.getElementById("galleryLightbox");
   const lightboxImg = document.getElementById("lightboxImg");
   const lightboxCaption = document.getElementById("lightboxCaption");
+  const lightboxInfoLink = document.getElementById("lightboxInfoLink");
   
   lightboxImg.src = imgSrc;
   lightboxCaption.textContent = captionText;
+  
+  if (infoUrl) {
+    lightboxInfoLink.href = infoUrl;
+    lightboxInfoLink.style.display = "inline-flex";
+  } else {
+    lightboxInfoLink.style.display = "none";
+  }
+  
   lightbox.style.display = "flex";
 }
 
