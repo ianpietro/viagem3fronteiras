@@ -32,7 +32,7 @@ const defaultItinerary = [
     weatherTemp: "24° / 13°C",
     activities: [
       { time: "09:15", title: "Saída do Condomínio", desc: "Saída de carro em direção à Usina de Itaipu." },
-      { time: "09:30", title: "Itaipu Inside (Tour Interno)", desc: "Deixar o carro no estacionamento oficial do Centro de Visitantes. Exige calçado fechado (09:30 às 12:00)." },
+      { time: "09:30", title: "Itaipu Panorâmica (Tour Normal)", desc: "Deixar o carro no estacionamento oficial do Centro de Visitantes. Visita panorâmica da grandiosa usina, excelente para todas as idades, com paradas nos mirantes para fotos incríveis da barragem (09:30 às 11:30)." },
       { time: "12:15", title: "Almoço no Restaurante Barracão", desc: "Almoço delicioso de comida caseira (buffet no fogão a lenha), localizado na descida da usina." },
       { time: "14:00", title: "Templo Budista Chen Tien", desc: "Visita contemplativa ao Templo Budista na região norte (14:00 às 15:15)." },
       { time: "15:40", title: "Mesquita Omar Ibn Al-Khattab", desc: "Parada na Mesquita na região central (15:40 às 16:30). Ombros e pernas cobertos; lenço fornecido para as mulheres na entrada." },
