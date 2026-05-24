@@ -1146,4 +1146,127 @@ footer .footer-brand {
   }
 }
 
+/* Budget Section & Cards */
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+}
+
+@media (max-width: 950px) {
+  .budget-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.budget-card {
+  padding: 32px;
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-shadow: var(--shadow-lg);
+  color: var(--text-white);
+  transition: var(--transition-smooth);
+}
+
+.budget-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Brasil - Rich forest green gradient */
+.budget-card.br {
+  background: linear-gradient(135deg, #0a5c36 0%, #032b18 100%);
+  border: 1px solid rgba(0, 156, 59, 0.2);
+}
+
+/* Paraguai - Rich deep red/navy gradient */
+.budget-card.py {
+  background: linear-gradient(135deg, #8c1c13 0%, #4a0d08 100%);
+  border: 1px solid rgba(213, 43, 30, 0.2);
+}
+
+/* Argentina - Rich navy blue to deep blue gradient */
+.budget-card.ar {
+  background: linear-gradient(135deg, #1b4965 0%, #0b2545 100%);
+  border: 1px solid rgba(116, 172, 223, 0.2);
+}
+
+.budget-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 16px;
+}
+
+.budget-flag {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.budget-card h3 {
+  font-size: 1.35rem;
+  color: var(--text-white);
+  font-family: var(--font-sans);
+  font-weight: 700;
+}
+
+.budget-category {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.budget-category h4 {
+  font-size: 1rem;
+  color: var(--accent);
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 6px;
+}
+
+.budget-item {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.budget-item strong {
+  color: var(--text-white);
+  font-weight: 600;
+}
+
+.budget-link {
+  background: var(--accent);
+  color: var(--primary-dark);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.budget-link:hover {
+  background: var(--text-white);
+  color: var(--primary-dark);
+  transform: scale(1.05);
+}
+
+@media (max-width: 480px) {
+  .budget-card {
+    padding: 24px 20px;
+  }
+}
+
 
