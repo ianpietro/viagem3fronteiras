@@ -764,10 +764,11 @@ p {
 
 .lightbox-content img {
   max-width: 100%;
-  max-height: 80vh;
+  max-height: 55vh; /* Reduced from 80vh to guarantee space for caption & button below */
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-lg);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  object-fit: contain;
 }
 
 .lightbox-caption {
