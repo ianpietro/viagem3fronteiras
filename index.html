@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Nossa Viagem dos Sonhos - Foz do Iguaçu 2026</title>
+  <meta name="description" content="Um roteiro de viagens familiar detalhado e interativo para a nossa incrível viagem para Foz do Iguaçu. Acompanhe a programação, orçamento e malas!">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- FontAwesome Icons for absolute design quality -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Background overlay when editor or lightbox is open -->
+  <div class="lightbox" id="galleryLightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="closeLightbox"><i class="fa-solid fa-xmark"></i></button>
+      <img src="" alt="" id="lightboxImg">
+      <div class="lightbox-caption" id="lightboxCaption">Legenda da Imagem</div>
+    </div>
+  </div>
+
+  <!-- Hero Banner Section -->
+  <header class="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-content">
+      <span class="badge badge-accent" style="margin-bottom: 24px;"><i class="fa-solid fa-plane-departure"></i> Roteiro de Viagem</span>
+      <h1 id="tripTitle">Tríplice Fronteira 2026</h1>
+      <p class="subtitle" id="tripSubtitle">Uma jornada espetacular por Foz do Iguaçu, Paraguai e Argentina com a família!</p>
+      
+      <!-- Countdown timer -->
+      <div class="countdown-container" id="countdown">
+        <div class="countdown-box">
+          <span class="countdown-num" id="days">00</span>
+          <span class="countdown-label">Dias</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-num" id="hours">00</span>
+          <span class="countdown-label">Horas</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-num" id="minutes">00</span>
+          <span class="countdown-label">Min</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-num" id="seconds">00</span>
+          <span class="countdown-label">Seg</span>
+        </div>
+      </div>
+      
+      <a href="#itinerary" class="btn btn-accent"><i class="fa-solid fa-calendar-days"></i> Ver Itinerário</a>
+    </div>
+  </header>
+
+  <!-- Quick Info Dashboard -->
+  <section class="container" style="margin-bottom: 80px;">
+    <div class="info-grid">
+      <div class="glass-panel info-card">
+        <div class="info-card-icon"><i class="fa-solid fa-calendar"></i></div>
+        <div class="info-card-details">
+          <h3>Período</h3>
+          <p id="infoDates">30 de Junho a 08 de Julho</p>
+        </div>
+      </div>
+      <div class="glass-panel info-card">
+        <div class="info-card-icon"><i class="fa-solid fa-cloud-sun"></i></div>
+        <div class="info-card-details">
+          <h3>Clima Médio</h3>
+          <p id="infoWeather">8°C a 24°C</p>
+        </div>
+      </div>
+      <div class="glass-panel info-card">
+        <div class="info-card-icon"><i class="fa-solid fa-users"></i></div>
+        <div class="info-card-details">
+          <h3>Grupo</h3>
+          <p id="infoGroup">Ian, Sophie, Andresa e Isa</p>
+        </div>
+      </div>
+      <div class="glass-panel info-card">
+        <div class="info-card-icon"><i class="fa-solid fa-bed"></i></div>
+        <div class="info-card-details">
+          <h3>Hospedagem</h3>
+          <p id="infoHotel">Village SF & Jose Gorgues</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Timeline Section -->
+  <section id="itinerary" class="section-padding container">
+    <div class="section-title-wrapper">
+      <span class="badge badge-primary"><i class="fa-solid fa-route"></i> O Cronograma</span>
+      <h2 class="section-title">Programação Dia a Dia</h2>
+      <p class="section-subtitle">Clique nos dias para expandir e ver os detalhes dos horários, locais e refeições.</p>
+    </div>
+    
+    <!-- Timeline navigation buttons -->
+    <div class="timeline-nav" id="timelineNav">
+      <button class="timeline-btn active" onclick="filterTimeline('all')">Todos os Dias</button>
+      <!-- Buttons will be injected by JavaScript -->
+    </div>
+    
+    <!-- Timeline dynamic container -->
+    <div class="timeline-container" id="timelineContainer">
+      <!-- Cards will be injected by JavaScript -->
+    </div>
+  </section>
+
+
+  <!-- Packing Checklist Section -->
+  <section id="packing" class="section-padding container">
+    <div class="section-title-wrapper">
+      <span class="badge badge-primary"><i class="fa-solid fa-suitcase"></i> Bagagem</span>
+      <h2 class="section-title">Checklist de Malas Inteligente</h2>
+      <p class="section-subtitle">Marque os itens à medida que os guarda. O site salva seu progresso automaticamente!</p>
+    </div>
+    
+    <div class="glass-panel" style="padding: 40px;">
+      <!-- Progress Bar -->
+      <div class="packing-progress-bar">
+        <div class="packing-progress-fill" id="packingProgressFill"></div>
+      </div>
+      <div class="packing-progress-text" id="packingProgressText">0 de 27 itens guardados (0%)</div>
+      
+      <!-- Category 1: Docs -->
+      <div class="packing-category">
+        <h3 class="packing-category-header"><i class="fa-solid fa-passport" style="color: var(--secondary); margin-right: 8px;"></i> Documentos & Essenciais</h3>
+        <div class="packing-list">
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">RG / CNH ou Passaporte</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Comprovante de Voo e Hotel</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Cartões e Dinheiro em Espécie</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Plano de Saúde / Seguro</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Pochete de Segurança / Doleira</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Caneta para Formulários / Aduana</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Category 2: Electronics -->
+      <div class="packing-category">
+        <h3 class="packing-category-header"><i class="fa-solid fa-camera" style="color: var(--secondary); margin-right: 8px;"></i> Eletrônicos</h3>
+        <div class="packing-list">
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Carregador do Celular</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Power Bank (Carregador Portátil)</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Capa à Prova d'Água p/ Celular</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Adaptador de Tomada</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Fone de Ouvido para o Voo</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Filtro de Linha / Extensão Elétrica</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Category 3: Clothing -->
+      <div class="packing-category">
+        <h3 class="packing-category-header"><i class="fa-solid fa-shirt" style="color: var(--secondary); margin-right: 8px;"></i> Vestuário & Conforto</h3>
+        <div class="packing-list">
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Capa de Chuva Impermeável</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Tênis Confortável p/ Caminhada</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Óculos de Sol e Boné / Chapéu</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Roupas Leves e Roupa de Banho</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Casaco de Frio / Corta-vento (Julho é inverno!)</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Calçado Reserva / Chinelo</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Category 4: Health -->
+      <div class="packing-category">
+        <h3 class="packing-category-header"><i class="fa-solid fa-kit-medical" style="color: var(--secondary); margin-right: 8px;"></i> Higiene & Cuidados</h3>
+        <div class="packing-list">
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Protetor Solar FPS 50+</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Repelente de Insetos (Essencial!)</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Medicamentos de Uso Pessoal</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Kit de Primeiros Socorros Básico</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Protetor Labial / Hidratante de Pele</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Lenços Umedecidos e Álcool em Gel</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Category 5: Border Crossing & Shopping Specials -->
+      <div class="packing-category">
+        <h3 class="packing-category-header"><i class="fa-solid fa-tags" style="color: var(--secondary); margin-right: 8px;"></i> Especiais da Tríplice Fronteira</h3>
+        <div class="packing-list">
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Mochila Leve p/ Passeios Diários</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Sacolas Dobráveis p/ Compras (CDE)</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Dinheiro em Espécie (Reais / Dólares)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Photo Gallery Section -->
+  <section id="gallery" class="section-padding container">
+    <div class="section-title-wrapper">
+      <span class="badge badge-primary"><i class="fa-solid fa-images"></i> Inspiração</span>
+      <h2 class="section-title">Galeria de Foz</h2>
+      <p class="section-subtitle">Uma prévia das paisagens maravilhosas que nos aguardam nesta jornada.</p>
+    </div>
+    
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox('assets/foz_hero.png', 'Cataratas do Iguaçu (Lado Brasileiro) - A maior cortina de água do planeta!')">
+        <img src="assets/foz_hero.png" alt="Cataratas do Iguaçu">
+        <div class="gallery-overlay">
+          <h3>As Cataratas do Iguaçu</h3>
+          <p>Lado Brasileiro - Vista Panorâmica dos Mirantes</p>
+        </div>
+      </div>
+      
+      <div class="gallery-item" onclick="openLightbox('assets/cataratas_argentina.png', 'Cataratas do Iguaçu (Lado Argentino) - Sinta a força e a proximidade da Garganta do Diabo!')">
+        <img src="assets/cataratas_argentina.png" alt="Cataratas Argentinas">
+        <div class="gallery-overlay">
+          <h3>Cataratas Argentinas</h3>
+          <p>Lado Argentino - Passarelas sobre a Garganta do Diabo</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox('assets/marco_fronteiras.png', 'Marco das Três Fronteiras - Pôr do sol espetacular no encontro dos rios Iguaçu e Paraná.')">
+        <img src="assets/marco_fronteiras.png" alt="Marco das Três Fronteiras">
+        <div class="gallery-overlay">
+          <h3>Marco das Três Fronteiras</h3>
+          <p>Encontro histórico de três nações e culturas</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox('assets/parque_aves.png', 'Tucano-toco majestoso no Parque das Aves - Contato de pertinho com a natureza.')">
+        <img src="assets/parque_aves.png" alt="Parque das Aves">
+        <div class="gallery-overlay">
+          <h3>Parque das Aves</h3>
+          <p>O maior santuário de preservação de aves da América Latina</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox('assets/ciudad_del_este.png', 'Ciudad del Este - Compras e a vibrante atmosfera comercial do Paraguai.')">
+        <img src="assets/ciudad_del_este.png" alt="Ciudad del Este">
+        <div class="gallery-overlay">
+          <h3>Ciudad del Este</h3>
+          <p>Paraguai - Um dos maiores centros de compras do mundo</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox('assets/templo_budista.png', 'Templo Budista Chen Tien - Um oásis de silêncio, meditação e estátuas monumentais.')">
+        <img src="assets/templo_budista.png" alt="Templo Budista Chen Tien">
+        <div class="gallery-overlay">
+          <h3>Templo Budista Chen Tien</h3>
+          <p>Foz do Iguaçu - Espiritualidade e jardins imponentes</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox('assets/itaipu_dam.png', 'Usina de Itaipu Binacional - Um dos maiores monumentos da engenharia moderna.')">
+        <img src="assets/itaipu_dam.png" alt="Usina de Itaipu">
+        <div class="gallery-overlay">
+          <h3>Usina de Itaipu</h3>
+          <p>Show de luzes e a grandiosidade da engenharia binacional</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox('assets/la_aripuca.png', 'La Aripuca - Complexo turístico agroecológico feito com árvores gigantes resgatadas em Puerto Iguazú.')">
+        <img src="assets/la_aripuca.png" alt="La Aripuca">
+        <div class="gallery-overlay">
+          <h3>La Aripuca</h3>
+          <p>Puerto Iguazú - Monumento ecológico e cultura local</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox('assets/feirinha_puerto.png', 'Feirinha de Puerto Iguazú - Delícias típicas como alfajores, empanadas artesanais e queijos finos.')">
+        <img src="assets/feirinha_puerto.png" alt="Feirinha de Puerto Iguazú">
+        <div class="gallery-overlay">
+          <h3>Feirinha de Puerto Iguazú</h3>
+          <p>Argentina - Sabores tradicionais da culinária portenha</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Tri-Border Cultural Guide Section -->
+  <section id="border-culture" class="section-padding container" style="margin-bottom: 40px;">
+    <div class="section-title-wrapper">
+      <span class="badge badge-primary"><i class="fa-solid fa-globe"></i> Conhecimento Prévio</span>
+      <h2 class="section-title">O Coração da Tríplice Fronteira</h2>
+      <p class="section-subtitle">Um breve guia sobre a geografia, as culturas e as curiosidades das três nações que vamos explorar juntas!</p>
+    </div>
+
+    <div class="country-grid">
+      <!-- Brasil -->
+      <div class="glass-panel country-card br">
+        <div class="country-card-header">
+          <span class="country-flag">🇧🇷</span>
+          <h3>Foz do Iguaçu (Brasil)</h3>
+        </div>
+        <div class="country-details-list">
+          <div class="country-details-item"><strong>📍 Onde Estamos:</strong> Extremo oeste do estado do <strong>Paraná</strong> (Região Sul do Brasil). Fica a cerca de <strong>640 km</strong> de Curitiba (capital do estado) e a <strong>1.500 km</strong> de Brasília (capital federal).</div>
+          <div class="country-details-item"><strong>A Cidade:</strong> Nossa base inicial por 5 dias. Um dos maiores santuários de preservação da natureza do planeta.</div>
+          <div class="country-details-item"><strong>Vibe &amp; Cultura:</strong> Uma cidade cosmopolita com mais de 80 etnias convivendo em harmonia. Possui a segunda maior comunidade islâmica do país, com uma incrível culinária árabe e templos budistas.</div>
+          <div class="country-details-item"><strong>Moeda Oficial:</strong> Real (BRL).</div>
+          <div class="country-details-item"><strong>Dica Especial:</strong> É o lado que oferece a vista panorâmica mais ampla e clássica das Cataratas e onde fica a grandiosa Usina de Itaipu.</div>
+        </div>
+      </div>
+
+      <!-- Paraguai -->
+      <div class="glass-panel country-card py">
+        <div class="country-card-header">
+          <span class="country-flag">🇵🇾</span>
+          <h3>Ciudad del Este (Paraguai)</h3>
+        </div>
+        <div class="country-details-list">
+          <div class="country-details-item"><strong>📍 Onde Estamos:</strong> Extremo leste do Paraguai, capital do departamento (estado) de <strong>Alto Paraná</strong>. Está a apenas <strong>325 km</strong> de Assunção (capital do país).</div>
+          <div class="country-details-item"><strong>A Cidade:</strong> Ligada ao Brasil pela Ponte da Amizade. É um dos maiores e mais agitados centros de compras das Américas!</div>
+          <div class="country-details-item"><strong>Vibe &amp; Cultura:</strong> Orgulho da herança indígena. Além do espanhol, o idioma oficial e falado nas ruas é o <strong>Guarani</strong> (as pessoas se comunicam no dialeto <em>Jopara</em>, misturando ambos). O símbolo nacional é o <strong>Tereré</strong> (erva-mate gelada com ervas medicinais) tomado o dia inteiro nas calçadas.</div>
+          <div class="country-details-item"><strong>Moeda Oficial:</strong> Guarani (PYG).</div>
+          <div class="country-details-item"><strong>Dica Especial:</strong> Não há necessidade de comprar a moeda oficial! O comércio aceita e prefere amplamente pagamentos em <strong>Real (BRL)</strong> ou <strong>Dólar (USD)</strong>.</div>
+        </div>
+      </div>
+
+      <!-- Argentina -->
+      <div class="glass-panel country-card ar">
+        <div class="country-card-header">
+          <span class="country-flag">🇦🇷</span>
+          <h3>Puerto Iguazú (Argentina)</h3>
+        </div>
+        <div class="country-details-list">
+          <div class="country-details-item"><strong>📍 Onde Estamos:</strong> Extremo norte da província (estado) de <strong>Misiones</strong> (região da Mesopotâmia Argentina). Está a <strong>300 km</strong> de Posadas (capital da província) e a <strong>1.300 km</strong> de Buenos Aires (capital do país).</div>
+          <div class="country-details-item"><strong>A Cidade:</strong> Nossa base nos últimos 3 dias, ligada ao Brasil pela Ponte da Fraternidade.</div>
+          <div class="country-details-item"><strong>Vibe &amp; Cultura:</strong> Clima europeu portenho com ritmo calmo. As pessoas valorizam o tempo com carinho e a famosa <strong>sesta de tarde</strong> é sagrada (a maior parte do comércio fecha entre 12:30 e 16:30, reabrindo para a vibrante noite). Terra das parrillas monumentais, vinhos finos e alfajores.</div>
+          <div class="country-details-item"><strong>Moeda Oficial:</strong> Peso Argentino (ARS).</div>
+          <div class="country-details-item"><strong>Dica Especial:</strong> Lojas e restaurantes aceitam amplamente Real (BRL) e Dólar (USD). Recomenda-se também levar dinheiro em espécie para despesas menores, como na Feirinha.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">Capo Expedições 2026</div>
+    <p>Criado com amor para aproximar e divertir toda a família nesta jornada extraordinária.</p>
+
+  </footer>
+
+
+
+  <!-- Javascript Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
