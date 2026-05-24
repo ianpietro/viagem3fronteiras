@@ -693,7 +693,7 @@ p {
   position: relative;
   border-radius: var(--border-radius-lg);
   overflow: hidden;
-  height: 250px;
+  height: 290px;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--card-border);
@@ -715,7 +715,7 @@ p {
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 30px;
+  padding: 20px;
   background: linear-gradient(transparent, rgba(10, 20, 35, 0.9));
   color: var(--text-white);
   transition: var(--transition-smooth);
