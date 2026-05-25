@@ -180,6 +180,8 @@ document.addEventListener("DOMContentLoaded", () => {
   updateLiveDashboardWeather();
   setupBottomNav();
   setupScrollSpy();
+  loadExpenses();
+  recalculateSplitter();
 
   // Register PWA Service Worker for absolute offline support
   if ('serviceWorker' in navigator) {
@@ -456,6 +458,13 @@ function setupBottomNav() {
   if (!bottomNav) return;
   
   window.addEventListener("scroll", () => {
+    // If splitter view is active, the bottom nav must ALWAYS be visible
+    const splitterView = document.getElementById("splitter-view");
+    if (splitterView && splitterView.style.display === "block") {
+      bottomNav.classList.add("visible");
+      return;
+    }
+    
     // Show bottom nav after scrolling down 300px from hero
     if (window.scrollY > 300) {
       bottomNav.classList.add("visible");
@@ -477,6 +486,12 @@ function setupScrollSpy() {
   const navItems = document.querySelectorAll(".bottom-nav-item");
   
   window.addEventListener("scroll", () => {
+    // Guard: If splitter tab is active, do not run scrollspy for main itinerary sections
+    const splitterView = document.getElementById("splitter-view");
+    if (splitterView && splitterView.style.display === "block") {
+      return;
+    }
+    
     let current = "";
     const scrollPosition = window.scrollY + 250; // offset for highlighting slightly before top
     
@@ -501,4 +516,334 @@ function setupScrollSpy() {
       }
     });
   });
+}
+
+// 14. PWA SPA Tab Switching Logic (Itinerary vs Splitter)
+function switchTab(tabId, sectionId) {
+  const mainView = document.getElementById("main-travel-view");
+  const splitterView = document.getElementById("splitter-view");
+  const navItems = document.querySelectorAll(".bottom-nav-item");
+  const bottomNav = document.getElementById("bottomNav");
+  
+  if (tabId === 'splitter') {
+    // Show Splitter Tab
+    mainView.style.display = "none";
+    splitterView.style.display = "block";
+    
+    // Highlight Splitter Nav Link
+    navItems.forEach(item => item.classList.remove("active"));
+    const navSplitter = document.getElementById("navSplitter");
+    if (navSplitter) navSplitter.classList.add("active");
+    
+    // Ensure bottom nav remains visible on splitter view
+    if (bottomNav) bottomNav.classList.add("visible");
+    
+    // Scroll to top of Splitter View
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    // Show Main Itinerary Tab
+    mainView.style.display = "block";
+    splitterView.style.display = "none";
+    
+    // Scroll to specified section if any
+    if (sectionId) {
+      setTimeout(() => {
+        const target = document.querySelector(sectionId);
+        if (target) {
+          const targetTop = target.offsetTop - 80; // Offset for sticky elements/navigation
+          window.scrollTo({ top: targetTop, behavior: 'smooth' });
+        }
+      }, 50);
+    }
+  }
+}
+
+// 15. "Rachador de Contas" (Travel Expense Splitter Engine)
+let expenses = [];
+const EXCHANGE_RATE_ARS = 215 / 60000; // $60.000 ARS = R$ 215,00
+const EXCHANGE_RATE_USD = 5.30;       // R$ 5,30 per USD
+
+// Load expenses from LocalStorage
+function loadExpenses() {
+  try {
+    const saved = localStorage.getItem("trip_expenses");
+    expenses = saved ? JSON.parse(saved) : [];
+  } catch (error) {
+    console.error("Could not load expenses:", error);
+    expenses = [];
+  }
+}
+
+// Dynamically update currency inputs
+function updateCurrencySymbol() {
+  const select = document.getElementById("expCurrency");
+  const symbolSpan = document.getElementById("currencySymbol");
+  const alertDiv = document.getElementById("currencyConvAlert");
+  const detailsSpan = document.getElementById("currencyConversionDetails");
+  const amountInput = document.getElementById("expAmount");
+  
+  const val = select.value;
+  const amt = parseFloat(amountInput.value) || 0;
+  
+  if (val === "BRL") {
+    symbolSpan.textContent = "R$";
+    alertDiv.style.display = "none";
+  } else if (val === "ARS") {
+    symbolSpan.textContent = "$";
+    alertDiv.style.display = "block";
+    const brlVal = (amt * EXCHANGE_RATE_ARS).toFixed(2);
+    detailsSpan.textContent = `$${amt.toLocaleString('pt-BR')} ARS ≈ R$ ${brlVal}`;
+  } else if (val === "USD") {
+    symbolSpan.textContent = "$";
+    alertDiv.style.display = "block";
+    const brlVal = (amt * EXCHANGE_RATE_USD).toFixed(2);
+    detailsSpan.textContent = `$${amt.toLocaleString('pt-BR')} USD ≈ R$ ${brlVal}`;
+  }
+}
+
+// Wire real-time input keypress for currency conversion preview
+document.addEventListener("DOMContentLoaded", () => {
+  const amountInput = document.getElementById("expAmount");
+  if (amountInput) {
+    amountInput.addEventListener("input", updateCurrencySymbol);
+  }
+});
+
+// Add a new expense item
+function addExpense() {
+  const descInput = document.getElementById("expDesc");
+  const amtInput = document.getElementById("expAmount");
+  const currSelect = document.getElementById("expCurrency");
+  const payerSelect = document.getElementById("expPayer");
+  const checkboxes = document.querySelectorAll(".exp-share-check");
+  
+  const desc = descInput.value.trim();
+  const amt = parseFloat(amtInput.value);
+  const curr = currSelect.value;
+  const payer = payerSelect.value;
+  
+  // Collect checked participants
+  const shares = [];
+  checkboxes.forEach(cb => {
+    if (cb.checked) shares.push(cb.value);
+  });
+  
+  if (shares.length === 0) {
+    alert("Por favor, selecione ao menos uma pessoa para dividir a despesa!");
+    return;
+  }
+  
+  // Convert currency to BRL
+  let brlAmount = amt;
+  if (curr === "ARS") {
+    brlAmount = amt * EXCHANGE_RATE_ARS;
+  } else if (curr === "USD") {
+    brlAmount = amt * EXCHANGE_RATE_USD;
+  }
+  
+  // Round to 2 decimals
+  brlAmount = parseFloat(brlAmount.toFixed(2));
+  
+  const expenseItem = {
+    desc,
+    originalAmount: amt,
+    currency: curr,
+    payer,
+    brlAmount,
+    shares,
+    date: new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
+  };
+  
+  expenses.push(expenseItem);
+  localStorage.setItem("trip_expenses", JSON.stringify(expenses));
+  
+  // Clear inputs
+  descInput.value = "";
+  amtInput.value = "";
+  currSelect.value = "BRL";
+  updateCurrencySymbol();
+  
+  recalculateSplitter();
+}
+
+// Delete expense item
+function deleteExpense(index) {
+  if (confirm(`Tem certeza que deseja excluir "${expenses[index].desc}"?`)) {
+    expenses.splice(index, 1);
+    localStorage.setItem("trip_expenses", JSON.stringify(expenses));
+    recalculateSplitter();
+  }
+}
+
+// Settle debts using the optimized Debt Simplification Engine
+function recalculateSplitter() {
+  let totalSpent = 0;
+  let balances = { Ian: 0, Sophie: 0, Andresa: 0, Isa: 0 };
+  
+  // 1. Calculate raw balances
+  expenses.forEach(exp => {
+    totalSpent += exp.brlAmount;
+    
+    // Payer is credited the full BRL amount
+    balances[exp.payer] += exp.brlAmount;
+    
+    // Each participant is debited their corresponding share
+    const shareAmt = exp.brlAmount / exp.shares.length;
+    exp.shares.forEach(person => {
+      balances[person] -= shareAmt;
+    });
+  });
+  
+  // 2. Intelligent Family Consolidation:
+  // Since Isa is a child (under 14) traveling with Andresa,
+  // her expenses/debts are consolidated directly under Andresa!
+  balances.Andresa += balances.Isa;
+  balances.Isa = 0;
+  
+  // 3. Update dashboard values in UI
+  const totalText = document.getElementById("splitterTotalSpent");
+  const avgText = document.getElementById("splitterAverageSpent");
+  if (totalText) totalText.textContent = `R$ ${totalSpent.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  
+  // Calculate average active adult split
+  const numAdults = 3; // Ian, Sophie, Andresa
+  const avgAmt = totalSpent / numAdults;
+  if (avgText) avgText.textContent = `R$ ${avgAmt.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} por adulto`;
+  
+  // 4. Resolve debts (Greedy Simplifier Algorithm)
+  // Split participants into positive balances (creditors) and negative balances (debtors)
+  let creditors = [];
+  let debtors = [];
+  
+  ["Ian", "Sophie", "Andresa"].forEach(person => {
+    const bal = parseFloat(balances[person].toFixed(2));
+    if (bal > 0.01) {
+      creditors.push({ name: person, balance: bal });
+    } else if (bal < -0.01) {
+      debtors.push({ name: person, balance: Math.abs(bal) });
+    }
+  });
+  
+  let instructions = [];
+  let cIdx = 0;
+  let dIdx = 0;
+  
+  while (cIdx < creditors.length && dIdx < debtors.length) {
+    let creditor = creditors[cIdx];
+    let debtor = debtors[dIdx];
+    
+    const transferAmt = Math.min(creditor.balance, debtor.balance);
+    instructions.push({
+      from: debtor.name,
+      to: creditor.name,
+      amount: parseFloat(transferAmt.toFixed(2))
+    });
+    
+    creditor.balance -= transferAmt;
+    debtor.balance -= transferAmt;
+    
+    if (creditor.balance < 0.01) cIdx++;
+    if (debtor.balance < 0.01) dIdx++;
+  }
+  
+  // 5. Render debts in UI
+  const statusDiv = document.getElementById("splitterSettleStatus");
+  const debtsContainer = document.getElementById("splitterDebtsList");
+  debtsContainer.innerHTML = "";
+  
+  if (instructions.length === 0) {
+    if (statusDiv) statusDiv.innerHTML = `<span style="color: #34c759;"><i class="fa-solid fa-circle-check"></i> Tudo equilibrado! Ninguém deve ninguém.</span>`;
+    debtsContainer.innerHTML = `<div style="text-align: center; color: rgba(255,255,255,0.4); padding: 20px; font-size: 0.95rem;"><i class="fa-solid fa-scale-balanced" style="font-size: 1.5rem; margin-bottom: 8px; display: block; color: rgba(255,255,255,0.2);"></i> Nenhuma transferência pendente no momento.</div>`;
+  } else {
+    if (statusDiv) statusDiv.innerHTML = `<span style="color: #ff9f0a;"><i class="fa-solid fa-triangle-exclamation"></i> Existem transferências pendentes de acerto.</span>`;
+    
+    instructions.forEach(inst => {
+      const item = document.createElement("div");
+      item.style.cssText = "display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.06); padding: 12px 16px; border-radius: var(--border-radius-sm); border-left: 4px solid #ff9f0a;";
+      item.innerHTML = `
+        <div style="font-size: 0.95rem; font-weight: 500; font-family: var(--font-sans);">
+          <strong>${inst.from}</strong> <span style="opacity: 0.7; font-weight: 400; font-size: 0.85rem;">deve pagar a</span> <strong>${inst.to}</strong>
+        </div>
+        <div style="font-size: 1.1rem; font-weight: 700; color: #ff9f0a; font-family: var(--font-sans);">
+          R$ ${inst.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        </div>
+      `;
+      debtsContainer.appendChild(item);
+    });
+  }
+  
+  // Cache globally for WhatsApp sharing
+  window.lastCalculatedInstructions = instructions;
+  window.lastTotalSpent = totalSpent;
+  window.lastAverageSpent = avgAmt;
+  
+  // 6. Render History in UI
+  const historyContainer = document.getElementById("splitterHistory");
+  historyContainer.innerHTML = "";
+  
+  if (expenses.length === 0) {
+    historyContainer.innerHTML = `<div style="text-align: center; color: var(--text-light); padding: 30px; font-size: 0.95rem;"><i class="fa-solid fa-receipt" style="font-size: 1.8rem; margin-bottom: 8px; display: block; opacity: 0.3;"></i> Nenhum gasto registrado ainda.</div>`;
+  } else {
+    // Reverse to show newest on top
+    [...expenses].reverse().forEach((exp, revIdx) => {
+      const origIdx = expenses.length - 1 - revIdx;
+      
+      const item = document.createElement("div");
+      item.style.cssText = "display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.02); padding: 12px; border-radius: var(--border-radius-sm); border: 1px solid rgba(0,0,0,0.04); transition: var(--transition-fast);";
+      
+      let currencyStr = "";
+      if (exp.currency !== "BRL") {
+        const symbol = exp.currency === "ARS" ? "$" : "$";
+        currencyStr = `<span style="font-size: 0.78rem; color: var(--text-light); display: block;">Original: ${symbol}${exp.originalAmount.toLocaleString('pt-BR')} ${exp.currency}</span>`;
+      }
+      
+      item.innerHTML = `
+        <div style="flex-grow: 1; min-width: 0;">
+          <h5 style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${exp.desc}</h5>
+          <span style="font-size: 0.78rem; color: var(--text-light); display: block; margin-top: 2px;">
+            Pago por <strong>${exp.payer}</strong> para <strong>${exp.shares.join(', ')}</strong> (${exp.date})
+          </span>
+          ${currencyStr}
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px; flex-shrink: 0; margin-left: 12px;">
+          <div style="text-align: right;">
+            <span style="font-size: 1rem; font-weight: 700; color: var(--primary); font-family: var(--font-sans);">
+              R$ ${exp.brlAmount.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
+          </div>
+          <button onclick="deleteExpense(${origIdx})" style="background: none; border: none; color: #ff3b30; cursor: pointer; font-size: 1.1rem; padding: 4px; transition: opacity 0.2s ease;"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+      `;
+      historyContainer.appendChild(item);
+    });
+  }
+}
+
+// Share final balances to WhatsApp
+function shareDebtsToWhatsApp() {
+  const instructions = window.lastCalculatedInstructions || [];
+  const total = window.lastTotalSpent || 0;
+  const avg = window.lastAverageSpent || 0;
+  
+  let msg = `*💸 Rachador de Contas Tríplice 2026*\\n`;
+  msg += `------------------------------------\\n`;
+  msg += `*Total de Gastos Comuns:* R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}\\n`;
+  msg += `*Divisão Média:* R$ ${avg.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} por adulto\\n\\n`;
+  msg += `*💵 Resolução de Saldos (Quem deve quem):*\\n`;
+  
+  if (instructions.length === 0) {
+    msg += `✅ Tudo equilibrado! Ninguém deve nada para ninguém.`;
+  } else {
+    instructions.forEach(inst => {
+      msg += `• *${inst.from}* deve pagar *R$ ${inst.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}* para *${inst.to}*\\n`;
+    });
+  }
+  
+  msg += `\\n------------------------------------\\n`;
+  msg += `_Criado e calculado com amor pelo nosso PWA de Viagem_ 🧳✈️`;
+  
+  // Format line breaks for WhatsApp API URL
+  const formattedText = msg.replace(/\\n/g, "\n");
+  
+  window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(formattedText)}`, "_blank");
 }
