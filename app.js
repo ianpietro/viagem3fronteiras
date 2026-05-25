@@ -320,18 +320,6 @@ function renderTimeline() {
               <!-- River meeting label (Triplice Fronteira) -->
               <circle cx="50" cy="45" r="0.8" fill="#ff3b30" />
             </svg>
-            
-            <!-- Route Steps Description -->
-            <div style="width: 100%; max-width: 450px; margin-top: 15px; font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.6;">
-              <p style="margin: 0 0 8px 0; font-weight: 600; color: white;">🗺️ Roteiro de Deslocamento:</p>
-              <ul style="margin: 0; padding-left: 18px; font-size: 0.8rem; display: flex; flex-direction: column; gap: 6px;">
-                <li><strong>Saída</strong>: Carro próprio saindo do <strong>Village SF</strong> sentido Norte.</li>
-                <li><strong>1ª Parada</strong>: Usina de <strong>Itaipu Binacional</strong> (Visita Técnica e almoço regional no Restaurante Barracão).</li>
-                <li><strong>2ª Parada</strong>: <strong>Templo Budista Chen Tien</strong> (Visita e contemplação no Extremo Norte de Foz).</li>
-                <li><strong>3ª Parada</strong>: <strong>Marco das Três Fronteiras BR</strong> (Fim de tarde, pôr do sol e jantar especial no Cabeza de Vaca).</li>
-                <li><strong>Retorno</strong>: Retorno noturno direto para o <strong>Village SF</strong>.</li>
-              </ul>
-            </div>
           </div>
           
           <!-- Google Maps Button -->
@@ -339,12 +327,6 @@ function renderTimeline() {
             <a href="https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Condominio+Village+San+Francisco,+Foz+do+Iguacu&waypoints=Usina+de+Itaipu,+Foz+do+Iguacu%7CTemplo+Budista+Chen+Tien,+Foz+do+Iguacu%7CMarco+das+Tres+Fronteiras,+Foz+do+Iguacu&travelmode=driving" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; max-width: 340px; padding: 12px 24px; border: none; border-radius: var(--border-radius-sm); background: linear-gradient(135deg, #4285f4 0%, #34a853 100%); color: white; font-family: var(--font-sans); font-size: 0.9rem; font-weight: 700; cursor: pointer; text-decoration: none; box-shadow: 0 4px 15px rgba(66, 133, 244, 0.25); transition: all 0.3s ease; text-align: center;">
               <i class="fa-solid fa-location-arrow"></i> Abrir Rota Completa no Google Maps
             </a>
-            
-            <div style="background: rgba(255, 159, 10, 0.08); border: 1px solid rgba(255, 159, 10, 0.15); border-radius: var(--border-radius-sm); padding: 12px; max-width: 440px;">
-              <p style="font-size: 0.72rem; color: #ff9f0a; margin: 0; line-height: 1.5; font-weight: 500; text-align: left;">
-                ℹ️ <strong>Dica Offline para o GPS:</strong> Antes de sair de casa, abra o aplicativo do Google Maps no celular, busque por "Foz do Iguaçu", puxe o menu inferior para cima, toque nos 3 pontinhos no canto superior direito e selecione <strong>"Baixar mapa off-line"</strong>. Fazendo isso, o botão acima abrirá o trajeto com navegação por voz e GPS funcionando 100% sem gastar internet!
-              </p>
-            </div>
           </div>
         </div>
       `;
