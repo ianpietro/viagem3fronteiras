@@ -231,6 +231,125 @@ function renderTimeline() {
     // Check if we should render this card based on filter
     if (activeFilter !== 'all' && activeFilter != day.dayNum) return;
     
+    // Create Map HTML only for Day 2 (Testing Phase)
+    let mapHtml = "";
+    if (day.dayNum === 2) {
+      mapHtml = `
+        <div class="day-map-wrapper" style="margin-top: 24px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.15);" onclick="event.stopPropagation()">
+          <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: #ffcc00; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-map-location-dot"></i> Rota do Dia 2 - Mapa Logístico
+          </h4>
+          
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--border-radius-md); padding: 16px; margin-bottom: 16px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center;">
+            <!-- SVG Map -->
+            <svg viewBox="0 0 100 80" style="width: 100%; max-width: 450px; height: auto; background: rgba(10, 20, 35, 0.6); border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden;">
+              <!-- Embedded Styles for Animations and Layout -->
+              <style>
+                @keyframes dash {
+                  to {
+                    stroke-dashoffset: -40;
+                  }
+                }
+                @keyframes pulse {
+                  0% {
+                    r: 1.8px;
+                    stroke-opacity: 1;
+                  }
+                  100% {
+                    r: 5px;
+                    stroke-opacity: 0;
+                  }
+                }
+                .map-text {
+                  font-family: var(--font-sans), sans-serif;
+                  font-weight: bold;
+                  fill: white;
+                  font-size: 2.2px;
+                  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+                }
+                .map-label {
+                  font-family: var(--font-sans), sans-serif;
+                  font-weight: 600;
+                  fill: rgba(255,255,255,0.25);
+                  font-size: 3px;
+                  letter-spacing: 0.5px;
+                }
+              </style>
+              
+              <!-- Rivers (Paraná & Iguaçu) -->
+              <!-- Paraná River (Top-Middle to Bottom-Left) -->
+              <path d="M50 0 L50 45 Q48 60 35 80" fill="none" stroke="#007aff" stroke-width="2.5" stroke-opacity="0.6" />
+              <!-- Iguaçu River (Center to Right) -->
+              <path d="M50 45 Q70 45 100 45" fill="none" stroke="#007aff" stroke-width="2.5" stroke-opacity="0.6" />
+              
+              <!-- Map Labels (Borders) -->
+              <text x="12" y="10" class="map-label">PARAGUAI</text>
+              <text x="78" y="10" class="map-label">BRASIL</text>
+              <text x="15" y="72" class="map-label">ARGENTINA</text>
+              
+              <!-- Bridges -->
+              <!-- Ponte da Amizade -->
+              <line x1="47.5" y1="15" x2="52.5" y2="15" stroke="#34c759" stroke-width="1.2" stroke-linecap="round" />
+              <text x="54" y="16.5" fill="#34c759" font-family="sans-serif" font-size="2px" font-weight="600">Pte. da Amizade</text>
+              
+              <!-- Route Path for Day 2 -->
+              <!-- Path: Village SF (72, 25) -> Itaipu (75, 8) -> Templo Budista (65, 5) -> Marco BR (53, 43) -> Village SF (72, 25) -->
+              <path d="M72 25 L75 8 L65 5 L53 43 Z" fill="none" stroke="#ff9f0a" stroke-width="0.8" stroke-dasharray="2 1.5" style="animation: dash 15s linear infinite;" />
+              
+              <!-- Pins / Stops (Day 2 Specific) -->
+              <!-- Stop 1: Village SF -->
+              <circle cx="72" cy="25" r="1.8" fill="#007aff" />
+              <circle cx="72" cy="25" r="1.8" fill="none" stroke="#007aff" stroke-width="0.4" style="animation: pulse 2s infinite;" />
+              <text x="75" y="26.2" class="map-text">Village SF (Início/Fim)</text>
+              
+              <!-- Stop 2: Itaipu -->
+              <circle cx="75" cy="8" r="1.5" fill="#ff9f0a" />
+              <circle cx="75" cy="8" r="1.5" fill="none" stroke="#ff9f0a" stroke-width="0.4" style="animation: pulse 2s infinite; animation-delay: 0.5s;" />
+              <text x="78" y="9.2" class="map-text">1. Itaipu</text>
+              
+              <!-- Stop 3: Templo Budista -->
+              <circle cx="65" cy="5" r="1.5" fill="#ff9f0a" />
+              <circle cx="65" cy="5" r="1.5" fill="none" stroke="#ff9f0a" stroke-width="0.4" style="animation: pulse 2s infinite; animation-delay: 1s;" />
+              <text x="50" y="5.2" class="map-text">2. Templo Budista</text>
+              
+              <!-- Stop 4: Marco BR -->
+              <circle cx="53" cy="43" r="1.5" fill="#ff9f0a" />
+              <circle cx="53" cy="43" r="1.5" fill="none" stroke="#ff9f0a" stroke-width="0.4" style="animation: pulse 2s infinite; animation-delay: 1.5s;" />
+              <text x="56" y="44.2" class="map-text">3. Marco 3 Fronteiras</text>
+              
+              <!-- River meeting label (Triplice Fronteira) -->
+              <circle cx="50" cy="45" r="0.8" fill="#ff3b30" />
+            </svg>
+            
+            <!-- Route Steps Description -->
+            <div style="width: 100%; max-width: 450px; margin-top: 15px; font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.6;">
+              <p style="margin: 0 0 8px 0; font-weight: 600; color: white;">🗺️ Roteiro de Deslocamento:</p>
+              <ul style="margin: 0; padding-left: 18px; font-size: 0.8rem; display: flex; flex-direction: column; gap: 6px;">
+                <li><strong>Saída</strong>: Carro próprio saindo do <strong>Village SF</strong> sentido Norte.</li>
+                <li><strong>1ª Parada</strong>: Usina de <strong>Itaipu Binacional</strong> (Visita Técnica e almoço regional no Restaurante Barracão).</li>
+                <li><strong>2ª Parada</strong>: <strong>Templo Budista Chen Tien</strong> (Visita e contemplação no Extremo Norte de Foz).</li>
+                <li><strong>3ª Parada</strong>: <strong>Marco das Três Fronteiras BR</strong> (Fim de tarde, pôr do sol e jantar especial no Cabeza de Vaca).</li>
+                <li><strong>Retorno</strong>: Retorno noturno direto para o <strong>Village SF</strong>.</li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Google Maps Button -->
+          <div style="display: flex; flex-direction: column; gap: 12px; align-items: center; margin-bottom: 8px;">
+            <a href="https://www.google.com/maps/dir/?api=1&origin=-25.5463,-54.5779&destination=-25.5463,-54.5779&waypoints=-25.4371,-54.5878%7C-25.4795,-54.5924%7C-25.5269,-54.5936&travelmode=driving" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; max-width: 340px; padding: 12px 24px; border: none; border-radius: var(--border-radius-sm); background: linear-gradient(135deg, #4285f4 0%, #34a853 100%); color: white; font-family: var(--font-sans); font-size: 0.9rem; font-weight: 700; cursor: pointer; text-decoration: none; box-shadow: 0 4px 15px rgba(66, 133, 244, 0.25); transition: all 0.3s ease; text-align: center;">
+              <i class="fa-solid fa-location-arrow"></i> Abrir Rota Completa no Google Maps
+            </a>
+            
+            <div style="background: rgba(255, 159, 10, 0.08); border: 1px solid rgba(255, 159, 10, 0.15); border-radius: var(--border-radius-sm); padding: 12px; max-width: 440px;">
+              <p style="font-size: 0.72rem; color: #ff9f0a; margin: 0; line-height: 1.5; font-weight: 500; text-align: left;">
+                ℹ️ <strong>Dica Offline para o GPS:</strong> Antes de sair de casa, abra o aplicativo do Google Maps no celular, busque por "Foz do Iguaçu", puxe o menu inferior para cima, toque nos 3 pontinhos no canto superior direito e selecione <strong>"Baixar mapa off-line"</strong>. Fazendo isso, o botão acima abrirá o trajeto com navegação por voz e GPS funcionando 100% sem gastar internet!
+              </p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     // Create Timeline Card
     const card = document.createElement("div");
     card.className = "timeline-item";
@@ -300,6 +419,8 @@ function renderTimeline() {
               </div>
             </div>
           </div>
+          
+          ${mapHtml}
         </div>
       </div>
     `;
