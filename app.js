@@ -1061,7 +1061,7 @@ async function uploadExpensesToCloud() {
   }
 }
 
-// Polling Loop: Check for cloud updates every 8 seconds
+// Polling Loop: Check for cloud updates every 3 seconds
 function startSyncPolling(binId) {
   stopSyncPolling();
   
@@ -1098,8 +1098,16 @@ function startSyncPolling(binId) {
     } finally {
       if (syncStatusIcon) syncStatusIcon.style.animation = "none";
     }
-  }, 8000);
+  }, 3000);
 }
+
+// Instant update trigger when user focuses or unlocks the app tab
+window.addEventListener("focus", () => {
+  const binId = localStorage.getItem("trip_sync_bin_id");
+  if (binId) {
+    fetchExpensesFromCloud(binId);
+  }
+});
 
 // Stop synchronization polling loop
 function stopSyncPolling() {
