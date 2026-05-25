@@ -129,166 +129,7 @@
     <!-- Timeline dynamic container -->
     <div class="timeline-container" id="timelineContainer">
       <!-- Cards will be injected by JavaScript -->
-    </div>
-  </section>
-
-
-  <!-- Packing Checklist Section -->
-  <section id="packing" class="section-padding container">
-    <div class="section-title-wrapper">
-      <span class="badge badge-primary"><i class="fa-solid fa-suitcase"></i> Bagagem</span>
-      <h2 class="section-title">Checklist de Malas Inteligente</h2>
-      <p class="section-subtitle">Marque os itens à medida que os guarda. O site salva seu progresso automaticamente!</p>
-    </div>
-    
-    <div class="glass-panel" style="padding: 40px;">
-      <!-- Progress Bar -->
-      <div class="packing-progress-bar">
-        <div class="packing-progress-fill" id="packingProgressFill"></div>
-      </div>
-      <div class="packing-progress-text" id="packingProgressText">0 de 27 itens guardados (0%)</div>
-      
-      <!-- Category 1: Docs -->
-      <div class="packing-category">
-        <h3 class="packing-category-header"><i class="fa-solid fa-passport" style="color: var(--secondary); margin-right: 8px;"></i> Documentos & Essenciais</h3>
-        <div class="packing-list">
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">RG / CNH ou Passaporte</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Comprovante de Voo e Hotel</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Cartões e Dinheiro em Espécie</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Plano de Saúde / Seguro</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Pochete de Segurança / Doleira</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Caneta para Formulários / Aduana</span>
-          </label>
-        </div>
-      </div>
-      
-      <!-- Category 2: Electronics -->
-      <div class="packing-category">
-        <h3 class="packing-category-header"><i class="fa-solid fa-camera" style="color: var(--secondary); margin-right: 8px;"></i> Eletrônicos</h3>
-        <div class="packing-list">
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Carregador do Celular</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Power Bank (Carregador Portátil)</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Capa à Prova d'Água p/ Celular</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Adaptador de Tomada</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Fone de Ouvido para o Voo</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Filtro de Linha / Extensão Elétrica</span>
-          </label>
-        </div>
-      </div>
-      
-      <!-- Category 3: Clothing -->
-      <div class="packing-category">
-        <h3 class="packing-category-header"><i class="fa-solid fa-shirt" style="color: var(--secondary); margin-right: 8px;"></i> Vestuário & Conforto</h3>
-        <div class="packing-list">
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Capa de Chuva Impermeável</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Tênis Confortável p/ Caminhada</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Óculos de Sol e Boné / Chapéu</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Roupas Leves e Roupa de Banho</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Casaco de Frio / Corta-vento (Julho é inverno!)</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Calçado Reserva / Chinelo</span>
-          </label>
-        </div>
-      </div>
-      
-      <!-- Category 4: Health -->
-      <div class="packing-category">
-        <h3 class="packing-category-header"><i class="fa-solid fa-kit-medical" style="color: var(--secondary); margin-right: 8px;"></i> Higiene & Cuidados</h3>
-        <div class="packing-list">
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Protetor Solar FPS 50+</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Repelente de Insetos (Essencial!)</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Medicamentos de Uso Pessoal</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Kit de Primeiros Socorros Básico</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Protetor Labial / Hidratante de Pele</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Lenços Umedecidos e Álcool em Gel</span>
-          </label>
-        </div>
-      </div>
-
-      <!-- Category 5: Border Crossing & Shopping Specials -->
-      <div class="packing-category">
-        <h3 class="packing-category-header"><i class="fa-solid fa-tags" style="color: var(--secondary); margin-right: 8px;"></i> Especiais da Tríplice Fronteira</h3>
-        <div class="packing-list">
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Mochila Leve p/ Passeios Diários</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Sacolas Dobráveis p/ Compras (CDE)</span>
-          </label>
-          <label class="packing-item">
-            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
-            <span class="packing-item-text">Dinheiro em Espécie (Reais / Dólares)</span>
-          </label>
-        </div>
+         </div>
       </div>
     </div>
 
@@ -618,6 +459,166 @@
 
   </div> <!-- Close #main-travel-view -->
 
+  <!-- Dedicated Packing Checklist Tab View -->
+  <div id="packing-view" style="display: none; padding: 24px 16px 100px 16px;" class="container animate-fade-in">
+    <div class="section-title-wrapper" style="margin-top: 30px; margin-bottom: 30px;">
+      <span class="badge badge-primary"><i class="fa-solid fa-suitcase"></i> Bagagem</span>
+      <h2 class="section-title">Checklist de Malas Inteligente</h2>
+      <p class="section-subtitle">Marque os itens à medida que os guarda. O site salva seu progresso automaticamente!</p>
+    </div>
+    
+    <div class="glass-panel" style="padding: 40px;">
+      <!-- Progress Bar -->
+      <div class="packing-progress-bar">
+        <div class="packing-progress-fill" id="packingProgressFill"></div>
+      </div>
+      <div class="packing-progress-text" id="packingProgressText">0 de 27 itens guardados (0%)</div>
+      
+      <!-- Category 1: Docs -->
+      <div class="packing-category">
+        <h3 class="packing-category-header"><i class="fa-solid fa-passport" style="color: var(--secondary); margin-right: 8px;"></i> Documentos & Essenciais</h3>
+        <div class="packing-list">
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">RG / CNH ou Passaporte</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Comprovante de Voo e Hotel</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Cartões e Dinheiro em Espécie</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Plano de Saúde / Seguro</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Pochete de Segurança / Doleira</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Caneta para Formulários / Aduana</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Category 2: Electronics -->
+      <div class="packing-category">
+        <h3 class="packing-category-header"><i class="fa-solid fa-camera" style="color: var(--secondary); margin-right: 8px;"></i> Eletrônicos</h3>
+        <div class="packing-list">
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Carregador do Celular</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Power Bank (Carregador Portátil)</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Capa à Prova d'Água p/ Celular</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Adaptador de Tomada</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Fone de Ouvido para o Voo</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Filtro de Linha / Extensão Elétrica</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Category 3: Clothing -->
+      <div class="packing-category">
+        <h3 class="packing-category-header"><i class="fa-solid fa-shirt" style="color: var(--secondary); margin-right: 8px;"></i> Vestuário & Conforto</h3>
+        <div class="packing-list">
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Capa de Chuva Impermeável</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Tênis Confortável p/ Caminhada</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Óculos de Sol e Boné / Chapéu</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Roupas Leves e Roupa de Banho</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Casaco de Frio / Corta-vento (Julho é inverno!)</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Calçado Reserva / Chinelo</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Category 4: Health -->
+      <div class="packing-category">
+        <h3 class="packing-category-header"><i class="fa-solid fa-kit-medical" style="color: var(--secondary); margin-right: 8px;"></i> Higiene & Cuidados</h3>
+        <div class="packing-list">
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Protetor Solar FPS 50+</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Repelente de Insetos (Essencial!)</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Medicamentos de Uso Pessoal</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Kit de Primeiros Socorros Básico</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Protetor Labial / Hidratante de Pele</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Lenços Umedecidos e Álcool em Gel</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Category 5: Border Crossing & Shopping Specials -->
+      <div class="packing-category">
+        <h3 class="packing-category-header"><i class="fa-solid fa-tags" style="color: var(--secondary); margin-right: 8px;"></i> Especiais da Tríplice Fronteira</h3>
+        <div class="packing-list">
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Mochila Leve p/ Passeios Diários</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Sacolas Dobráveis p/ Compras (CDE)</span>
+          </label>
+          <label class="packing-item">
+            <input type="checkbox" class="packing-checkbox" onchange="saveChecklistState()">
+            <span class="packing-item-text">Dinheiro em Espécie (Reais / Dólares)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Dedicated Expense Splitter Tab View -->
   <div id="splitter-view" style="display: none; padding: 24px 16px 100px 16px;" class="container animate-fade-in">
     <!-- Header banner -->
@@ -742,7 +743,7 @@
       <i class="fa-solid fa-wallet"></i>
       <span>Custos</span>
     </a>
-    <a href="#packing" onclick="switchTab('main', '#packing'); event.preventDefault();" class="bottom-nav-item" id="navPacking">
+    <a href="#packing" onclick="switchTab('packing'); event.preventDefault();" class="bottom-nav-item" id="navPacking">
       <i class="fa-solid fa-suitcase-rolling"></i>
       <span>Malas</span>
     </a>

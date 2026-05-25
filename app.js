@@ -482,16 +482,17 @@ function setupScrollSpy() {
   const sections = [
     document.getElementById("itinerary"),
     document.getElementById("trip-budget"),
-    document.getElementById("packing"),
     document.getElementById("border-culture"),
     document.getElementById("gallery")
   ];
   const navItems = document.querySelectorAll(".bottom-nav-item");
   
   window.addEventListener("scroll", () => {
-    // Guard: If splitter tab is active, do not run scrollspy for main itinerary sections
+    // Guard: If splitter or packing tab is active, do not run scrollspy for main itinerary sections
     const splitterView = document.getElementById("splitter-view");
-    if (splitterView && splitterView.style.display === "block") {
+    const packingView = document.getElementById("packing-view");
+    if ((splitterView && splitterView.style.display === "block") || 
+        (packingView && packingView.style.display === "block")) {
       return;
     }
     
@@ -521,17 +522,19 @@ function setupScrollSpy() {
   });
 }
 
-// 14. PWA SPA Tab Switching Logic (Itinerary vs Splitter)
+// 14. PWA SPA Tab Switching Logic (Itinerary vs Splitter vs Packing)
 function switchTab(tabId, sectionId) {
   const mainView = document.getElementById("main-travel-view");
   const splitterView = document.getElementById("splitter-view");
+  const packingView = document.getElementById("packing-view");
   const navItems = document.querySelectorAll(".bottom-nav-item");
   const bottomNav = document.getElementById("bottomNav");
   
   if (tabId === 'splitter') {
     // Show Splitter Tab
-    mainView.style.display = "none";
-    splitterView.style.display = "block";
+    if (mainView) mainView.style.display = "none";
+    if (packingView) packingView.style.display = "none";
+    if (splitterView) splitterView.style.display = "block";
     
     // Highlight Splitter Nav Link
     navItems.forEach(item => item.classList.remove("active"));
@@ -543,10 +546,27 @@ function switchTab(tabId, sectionId) {
     
     // Scroll to top of Splitter View
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (tabId === 'packing') {
+    // Show Packing Tab
+    if (mainView) mainView.style.display = "none";
+    if (splitterView) splitterView.style.display = "none";
+    if (packingView) packingView.style.display = "block";
+    
+    // Highlight Packing Nav Link
+    navItems.forEach(item => item.classList.remove("active"));
+    const navPacking = document.getElementById("navPacking");
+    if (navPacking) navPacking.classList.add("active");
+    
+    // Ensure bottom nav remains visible on packing view
+    if (bottomNav) bottomNav.classList.add("visible");
+    
+    // Scroll to top of Packing View
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
     // Show Main Itinerary Tab
-    mainView.style.display = "block";
-    splitterView.style.display = "none";
+    if (mainView) mainView.style.display = "block";
+    if (splitterView) splitterView.style.display = "none";
+    if (packingView) packingView.style.display = "none";
     
     // Scroll to specified section if any
     if (sectionId) {
