@@ -1,4 +1,4 @@
-const CACHE_NAME = 'triplice-frontera-cache-v15';
+const CACHE_NAME = 'triplice-frontera-cache-v16';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
