@@ -178,6 +178,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setupChecklist();
   setupLightbox();
   updateLiveDashboardWeather();
+  setupBottomNav();
+  setupScrollSpy();
 
   // Register PWA Service Worker for absolute offline support
   if ('serviceWorker' in navigator) {
@@ -446,4 +448,57 @@ async function updateLiveDashboardWeather() {
   } catch (error) {
     console.warn("Could not fetch live weather from Open-Meteo:", error);
   }
+}
+
+// 12. PWA Bottom Navigation (Scroll Detection)
+function setupBottomNav() {
+  const bottomNav = document.getElementById("bottomNav");
+  if (!bottomNav) return;
+  
+  window.addEventListener("scroll", () => {
+    // Show bottom nav after scrolling down 300px from hero
+    if (window.scrollY > 300) {
+      bottomNav.classList.add("visible");
+    } else {
+      bottomNav.classList.remove("visible");
+    }
+  });
+}
+
+// 13. PWA ScrollSpy (Highlight Active Navigation Item)
+function setupScrollSpy() {
+  const sections = [
+    document.getElementById("itinerary"),
+    document.getElementById("trip-budget"),
+    document.getElementById("packing"),
+    document.getElementById("border-culture"),
+    document.getElementById("gallery")
+  ];
+  const navItems = document.querySelectorAll(".bottom-nav-item");
+  
+  window.addEventListener("scroll", () => {
+    let current = "";
+    const scrollPosition = window.scrollY + 250; // offset for highlighting slightly before top
+    
+    sections.forEach((section) => {
+      if (!section) return;
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (scrollPosition >= sectionTop && scrollPosition < (sectionTop + sectionHeight)) {
+        current = section.getAttribute("id");
+      }
+    });
+    
+    // Extra checks for bottom of page
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+      current = "gallery"; // Gallery is at the very bottom
+    }
+    
+    navItems.forEach((item) => {
+      item.classList.remove("active");
+      if (item.getAttribute("href") === `#${current}`) {
+        item.classList.add("active");
+      }
+    });
+  });
 }
