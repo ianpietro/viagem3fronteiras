@@ -178,6 +178,13 @@ document.addEventListener("DOMContentLoaded", () => {
   setupChecklist();
   setupLightbox();
   updateLiveDashboardWeather();
+
+  // Register PWA Service Worker for absolute offline support
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then((reg) => console.log('[PWA] Service Worker registrado com sucesso:', reg.scope))
+      .catch((err) => console.error('[PWA] Falha ao registrar Service Worker:', err));
+  }
 });
 
 // 2. LocalStorage & Data Loading

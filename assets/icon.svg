@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1423" />
+      <stop offset="100%" stop-color="#142846" />
+    </linearGradient>
+    <!-- Golden Accent Gradient -->
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f1c40f" />
+      <stop offset="50%" stop-color="#d4af37" />
+      <stop offset="100%" stop-color="#b8860b" />
+    </linearGradient>
+    <!-- Soft Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Circular Base -->
+  <circle cx="256" cy="256" r="240" fill="url(#bg-grad)" stroke="url(#gold-grad)" stroke-width="8" />
+
+  <!-- Outer Compass Ring -->
+  <circle cx="256" cy="256" r="190" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="4" stroke-dasharray="10 15" />
+
+  <!-- Compass Points (North, South, East, West) -->
+  <polygon points="256,100 264,125 248,125" fill="url(#gold-grad)" />
+  <polygon points="256,412 264,387 248,387" fill="url(#gold-grad)" opacity="0.8" />
+  <polygon points="412,256 387,264 387,248" fill="url(#gold-grad)" opacity="0.8" />
+  <polygon points="100,256 125,264 125,248" fill="url(#gold-grad)" opacity="0.8" />
+
+  <!-- Inner Globe Grid -->
+  <path d="M 256 66 A 190 190 0 0 0 256 446 Z" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="3" />
+  <path d="M 256 66 A 120 190 0 0 0 256 446 Z" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="3" />
+  <path d="M 256 66 A 60 190 0 0 0 256 446 Z" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="3" />
+  <path d="M 66 256 A 190 190 0 0 0 446 256 Z" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="3" />
+  <path d="M 90 160 A 190 130 0 0 0 422 160 Z" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="3" />
+  <path d="M 90 352 A 190 130 0 0 0 422 352 Z" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="3" />
+
+  <!-- The Golden Paper Airplane / Travel Arrow -->
+  <g filter="url(#glow)">
+    <!-- Shadow Side -->
+    <polygon points="256,130 256,330 146,360" fill="#b8860b" />
+    <!-- Bright Side -->
+    <polygon points="256,130 366,360 256,330" fill="url(#gold-grad)" />
+    <!-- Center Crease -->
+    <line x1="256" y1="130" x2="256" y2="330" stroke="#f1c40f" stroke-width="2" />
+  </g>
+
+  <!-- Center Decorative Compass Axis Pin -->
+  <circle cx="256" cy="256" r="10" fill="#ffffff" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.5))" />
+</svg>

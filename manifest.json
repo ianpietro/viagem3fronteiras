@@ -1,0 +1,19 @@
+{
+  "name": "Roteiro Tríplice Fronteira 2026",
+  "short_name": "Tríplice 2026",
+  "description": "Roteiro de viagem completo e interativo da família para Foz do Iguaçu, Paraguai e Argentina.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a1423",
+  "theme_color": "#0a1423",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
