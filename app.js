@@ -183,6 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadExpenses();
   recalculateSplitter();
   initCloudSync();
+  loadExchangeRates();
 
   // Register PWA Service Worker for absolute offline support
   if ('serviceWorker' in navigator) {
@@ -562,8 +563,26 @@ function switchTab(tabId, sectionId) {
 
 // 15. "Rachador de Contas" (Travel Expense Splitter Engine)
 let expenses = [];
-const EXCHANGE_RATE_ARS = 215 / 60000; // $60.000 ARS = R$ 215,00
-const EXCHANGE_RATE_USD = 5.30;       // R$ 5,30 per USD
+let EXCHANGE_RATE_ARS = 215 / 60000; // $60.000 ARS = R$ 215,00 (Border fallback)
+let EXCHANGE_RATE_USD = 5.30;       // R$ 5,30 per USD (Commercial fallback)
+
+// Dynamic Exchange Rate Loader (Real-time rates from DolarHoje & Investing.com)
+async function loadExchangeRates() {
+  try {
+    const response = await fetch("/api/exchange");
+    if (response.ok) {
+      const data = await response.json();
+      if (data.USD) EXCHANGE_RATE_USD = data.USD;
+      if (data.ARS) EXCHANGE_RATE_ARS = data.ARS;
+      console.log(`[Exchange] Rates loaded in real-time! USD: R$ ${EXCHANGE_RATE_USD} | ARS: R$ ${EXCHANGE_RATE_ARS}`);
+      
+      // Update form display preview
+      updateCurrencySymbol();
+    }
+  } catch (error) {
+    console.warn("[Exchange] Could not load live rates, using border fallbacks.", error);
+  }
+}
 
 // Load expenses from LocalStorage
 function loadExpenses() {
