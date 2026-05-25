@@ -874,19 +874,15 @@ function shareDebtsToWhatsApp() {
 let syncIntervalId = null;
 const SYNC_API_BASE = "/api/bins";
 
-// Initialize Cloud Sync state on app load
 function initCloudSync() {
-  const binId = localStorage.getItem("trip_sync_bin_id");
-  if (binId) {
-    showConnectedUI(binId);
-    fetchExpensesFromCloud(binId);
-    startSyncPolling(binId);
-  } else {
-    showDisconnectedUI();
-  }
+  const DEFAULT_SYNC_CODE = "0dvgTMQvj9";
+  localStorage.setItem("trip_sync_bin_id", DEFAULT_SYNC_CODE);
+  showConnectedUI(DEFAULT_SYNC_CODE);
+  fetchExpensesFromCloud(DEFAULT_SYNC_CODE);
+  startSyncPolling(DEFAULT_SYNC_CODE);
 }
 
-// Start a completely new cloud bin for the trip
+// Start a completely new cloud bin for the trip (unused/fallback)
 async function startNewCloudSync() {
   const syncStatusIcon = document.getElementById("syncStatusIcon");
   if (syncStatusIcon) syncStatusIcon.style.animation = "spin 1s linear infinite";
@@ -916,23 +912,26 @@ async function startNewCloudSync() {
     console.error("Cloud sync creation failed:", error);
     updateSyncStatusText("Erro ao conectar. Tente novamente.");
     if (syncStatusIcon) syncStatusIcon.style.animation = "none";
-    alert("Não foi possível criar a sala na nuvem. Verifique sua conexão com a internet!");
   }
 }
 
 // Show/Hide code input overlay
 function showConnectSyncInput() {
-  document.getElementById("syncInputWrapper").style.display = "block";
+  const wrapper = document.getElementById("syncInputWrapper");
+  if (wrapper) wrapper.style.display = "block";
 }
 
 function hideConnectSyncInput() {
-  document.getElementById("syncInputWrapper").style.display = "none";
-  document.getElementById("syncCodeInput").value = "";
+  const wrapper = document.getElementById("syncInputWrapper");
+  if (wrapper) wrapper.style.display = "none";
+  const input = document.getElementById("syncCodeInput");
+  if (input) input.value = "";
 }
 
 // Connect to an existing room using a code (binId)
 async function connectToExistingSync() {
   const codeInput = document.getElementById("syncCodeInput");
+  if (!codeInput) return;
   const binId = codeInput.value.trim();
   
   if (!binId) {
@@ -1121,29 +1120,58 @@ function mergeExpenses(local, cloud) {
 
 // UI State Switchers
 function showConnectedUI(binId) {
-  document.getElementById("syncBadge").textContent = "Nuvem";
-  document.getElementById("syncBadge").style.background = "#34c759";
-  document.getElementById("syncBadge").style.color = "white";
-  document.getElementById("syncStatusText").textContent = "Contas sincronizadas com outros dispositivos em tempo real.";
+  const badge = document.getElementById("syncBadge");
+  if (badge) {
+    badge.textContent = "Nuvem";
+    badge.style.background = "#34c759";
+    badge.style.color = "white";
+  }
   
-  document.getElementById("syncActions").style.display = "none";
-  document.getElementById("syncInputWrapper").style.display = "none";
-  document.getElementById("syncConnectedInfo").style.display = "flex";
+  const text = document.getElementById("syncStatusText");
+  if (text) {
+    text.textContent = "Contas sincronizadas com outros dispositivos em tempo real.";
+  }
   
-  document.getElementById("syncCodeDisplay").textContent = binId;
-  document.getElementById("syncStatusIcon").style.color = "#34c759";
+  const actions = document.getElementById("syncActions");
+  if (actions) actions.style.display = "none";
+  
+  const wrapper = document.getElementById("syncInputWrapper");
+  if (wrapper) wrapper.style.display = "none";
+  
+  const info = document.getElementById("syncConnectedInfo");
+  if (info) info.style.display = "flex";
+  
+  const display = document.getElementById("syncCodeDisplay");
+  if (display) display.textContent = binId;
+  
+  const icon = document.getElementById("syncStatusIcon");
+  if (icon) icon.style.color = "#34c759";
 }
 
 function showDisconnectedUI() {
-  document.getElementById("syncBadge").textContent = "Local";
-  document.getElementById("syncBadge").style.background = "rgba(255,255,255,0.1)";
-  document.getElementById("syncBadge").style.color = "rgba(255,255,255,0.7)";
-  document.getElementById("syncStatusText").textContent = "Seus dados estão salvos apenas localmente neste celular.";
+  const badge = document.getElementById("syncBadge");
+  if (badge) {
+    badge.textContent = "Local";
+    badge.style.background = "rgba(255,255,255,0.1)";
+    badge.style.color = "rgba(255,255,255,0.7)";
+  }
   
-  document.getElementById("syncActions").style.display = "flex";
-  document.getElementById("syncInputWrapper").style.display = "none";
-  document.getElementById("syncConnectedInfo").style.display = "none";
-  document.getElementById("syncStatusIcon").style.color = "rgba(255,255,255,0.6)";
+  const text = document.getElementById("syncStatusText");
+  if (text) {
+    text.textContent = "Seus dados estão salvos apenas localmente neste celular.";
+  }
+  
+  const actions = document.getElementById("syncActions");
+  if (actions) actions.style.display = "flex";
+  
+  const wrapper = document.getElementById("syncInputWrapper");
+  if (wrapper) wrapper.style.display = "none";
+  
+  const info = document.getElementById("syncConnectedInfo");
+  if (info) info.style.display = "none";
+  
+  const icon = document.getElementById("syncStatusIcon");
+  if (icon) icon.style.color = "rgba(255,255,255,0.6)";
 }
 
 // Update status description text
