@@ -872,7 +872,7 @@ function shareDebtsToWhatsApp() {
 // ==========================================================================
 
 let syncIntervalId = null;
-const SYNC_API_BASE = "https://jsonbin-zeta.vercel.app/api/bins";
+const SYNC_API_BASE = "/api/bins";
 
 // Initialize Cloud Sync state on app load
 function initCloudSync() {
@@ -943,7 +943,7 @@ async function connectToExistingSync() {
   updateSyncStatusText("Verificando código...");
   
   try {
-    const response = await fetch(`${SYNC_API_BASE}/${binId}`);
+    const response = await fetch(`${SYNC_API_BASE}?id=${binId}`);
     if (!response.ok) throw new Error("Invalid code or connection issue");
     
     const data = await response.json();
@@ -956,7 +956,7 @@ async function connectToExistingSync() {
       recalculateSplitter();
       
       // Update cloud with merged list
-      await fetch(`${SYNC_API_BASE}/${binId}`, {
+      await fetch(`${SYNC_API_BASE}?id=${binId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
@@ -996,7 +996,7 @@ function disconnectCloudSync() {
 // Fetch latest data from cloud (once)
 async function fetchExpensesFromCloud(binId) {
   try {
-    const response = await fetch(`${SYNC_API_BASE}/${binId}`);
+    const response = await fetch(`${SYNC_API_BASE}?id=${binId}`);
     if (!response.ok) throw new Error("Fetch failed");
     
     const data = await response.json();
@@ -1008,7 +1008,7 @@ async function fetchExpensesFromCloud(binId) {
     recalculateSplitter();
     
     // Update cloud with merged
-    await fetch(`${SYNC_API_BASE}/${binId}`, {
+    await fetch(`${SYNC_API_BASE}?id=${binId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -1032,7 +1032,7 @@ async function uploadExpensesToCloud() {
   updateSyncStatusText("Sincronizando com a nuvem...");
   
   try {
-    const response = await fetch(`${SYNC_API_BASE}/${binId}`, {
+    const response = await fetch(`${SYNC_API_BASE}?id=${binId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -1066,7 +1066,7 @@ function startSyncPolling(binId) {
     if (syncStatusIcon) syncStatusIcon.style.animation = "spin 1s linear infinite";
     
     try {
-      const response = await fetch(`${SYNC_API_BASE}/${binId}`);
+      const response = await fetch(`${SYNC_API_BASE}?id=${binId}`);
       if (!response.ok) throw new Error("Polling fetch failed");
       
       const data = await response.json();
