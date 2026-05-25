@@ -566,21 +566,48 @@ let expenses = [];
 let EXCHANGE_RATE_ARS = 215 / 60000; // $60.000 ARS = R$ 215,00 (Border fallback)
 let EXCHANGE_RATE_USD = 5.30;       // R$ 5,30 per USD (Commercial fallback)
 
-// Dynamic Exchange Rate Loader (Real-time rates from DolarHoje & Investing.com)
+// Dynamic Exchange Rate Loader (Persists rates to localStorage for offline resilience & once-a-day updates)
 async function loadExchangeRates() {
+  // 1. Try to load from localStorage first (for instant startup and offline support)
+  try {
+    const savedRates = localStorage.getItem("trip_exchange_rates");
+    if (savedRates) {
+      const data = JSON.parse(savedRates);
+      if (data.USD) EXCHANGE_RATE_USD = data.USD;
+      if (data.ARS) EXCHANGE_RATE_ARS = data.ARS;
+      console.log(`[Exchange] Loaded stored rates: USD R$ ${EXCHANGE_RATE_USD} | ARS R$ ${EXCHANGE_RATE_ARS}`);
+    }
+  } catch (err) {
+    console.warn("[Exchange] Error loading stored rates:", err);
+  }
+
+  // 2. Check if we need to fetch new rates (once a day cache limit)
+  const lastFetched = parseInt(localStorage.getItem("trip_exchange_rates_fetched_at") || "0");
+  const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+  
+  if (Date.now() - lastFetched < ONE_DAY_MS) {
+    console.log("[Exchange] Rates are fresh (fetched less than 24 hours ago). Skipping network request.");
+    updateCurrencySymbol();
+    return;
+  }
+
+  // 3. Fetch from API to update
   try {
     const response = await fetch("/api/exchange");
     if (response.ok) {
       const data = await response.json();
       if (data.USD) EXCHANGE_RATE_USD = data.USD;
       if (data.ARS) EXCHANGE_RATE_ARS = data.ARS;
-      console.log(`[Exchange] Rates loaded in real-time! USD: R$ ${EXCHANGE_RATE_USD} | ARS: R$ ${EXCHANGE_RATE_ARS}`);
       
-      // Update form display preview
+      // Persist successful rates
+      localStorage.setItem("trip_exchange_rates", JSON.stringify({ USD: EXCHANGE_RATE_USD, ARS: EXCHANGE_RATE_ARS }));
+      localStorage.setItem("trip_exchange_rates_fetched_at", Date.now().toString());
+      
+      console.log(`[Exchange] Rates successfully updated today! USD: R$ ${EXCHANGE_RATE_USD} | ARS: R$ ${EXCHANGE_RATE_ARS}`);
       updateCurrencySymbol();
     }
   } catch (error) {
-    console.warn("[Exchange] Could not load live rates, using border fallbacks.", error);
+    console.warn("[Exchange] Network update failed. Keeping the most recent stored/fallback rates.", error);
   }
 }
 
