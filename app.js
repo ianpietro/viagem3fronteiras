@@ -231,12 +231,25 @@ function renderTimeline() {
     // Check if we should render this card based on filter
     if (activeFilter !== 'all' && activeFilter != day.dayNum) return;
     
-    // Create Map HTML only for Day 2 (Testing Phase)
+    // Create Google Maps redirect buttons for all 9 days
+    const googleMapsRoutes = {
+      1: "https://www.google.com/maps/dir/?api=1&origin=Aeroporto+Internacional+de+Foz+do+Iguacu&destination=Bona+Trattoria,+Foz+do+Iguacu&waypoints=Condominio+Village+San+Francisco,+Foz+do+Iguacu&travelmode=driving",
+      2: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Condominio+Village+San+Francisco,+Foz+do+Iguacu&waypoints=Usina+de+Itaipu,+Foz+do+Iguacu%7CTemplo+Budista+Chen+Tien,+Foz+do+Iguacu%7CMarco+das+Tres+Fronteiras,+Foz+do+Iguacu&travelmode=driving",
+      3: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Condominio+Village+San+Francisco,+Foz+do+Iguacu&waypoints=Parque+Nacional+do+Iguacu,+Foz+do+Iguacu%7CParque+das+Aves,+Foz+do+Iguacu%7CAeroporto+Internacional+de+Foz+do+Iguacu&travelmode=driving",
+      4: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Hotel+Bella+Italia,+Foz+do+Iguacu&waypoints=Aduana+Paraguai%7CShopping+China+Importados,+Ciudad+del+Este&travelmode=driving",
+      5: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Capitao+Bar,+Foz+do+Iguacu&waypoints=Cellshop+Importados,+Ciudad+del+Este&travelmode=driving",
+      6: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=La+Feirinha,+Puerto+Iguazu&waypoints=Duty+Free+Shop+Puerto+Iguazu%7CHospedaje+Jose+Gorgues,+Puerto+Iguazu&travelmode=driving",
+      7: "https://www.google.com/maps/dir/?api=1&origin=Hospedaje+Jose+Gorgues,+Puerto+Iguazu&destination=El+Quincho+del+Tio+Querido,+Puerto+Iguazu&waypoints=Parque+Nacional+Iguazu,+Puerto+Iguazu&travelmode=driving",
+      8: "https://www.google.com/maps/dir/?api=1&origin=Hospedaje+Jose+Gorgues,+Puerto+Iguazu&destination=Hospedaje+Jose+Gorgues,+Puerto+Iguazu&waypoints=Hito+Tres+Fronteras,+Puerto+Iguazu%7CLa+Aripuca,+Puerto+Iguazu%7CCaminos+del+Vino,+Puerto+Iguazu&travelmode=driving",
+      9: "https://www.google.com/maps/dir/?api=1&origin=Hospedaje+Jose+Gorgues,+Puerto+Iguazu&destination=Aeroporto+Internacional+de+Foz+do+Iguacu&waypoints=Aduana+Argentina,+Puerto+Iguazu&travelmode=driving"
+    };
+
     let mapHtml = "";
-    if (day.dayNum === 2) {
+    const routeUrl = googleMapsRoutes[day.dayNum];
+    if (routeUrl) {
       mapHtml = `
         <div class="day-map-wrapper" style="margin-top: 24px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.15); display: flex; justify-content: center; align-items: center;" onclick="event.stopPropagation()">
-          <a href="https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Condominio+Village+San+Francisco,+Foz+do+Iguacu&waypoints=Usina+de+Itaipu,+Foz+do+Iguacu%7CTemplo+Budista+Chen+Tien,+Foz+do+Iguacu%7CMarco+das+Tres+Fronteiras,+Foz+do+Iguacu&travelmode=driving" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; max-width: 340px; padding: 12px 24px; border: none; border-radius: var(--border-radius-sm); background: linear-gradient(135deg, #4285f4 0%, #34a853 100%); color: white; font-family: var(--font-sans); font-size: 0.9rem; font-weight: 700; cursor: pointer; text-decoration: none; box-shadow: 0 4px 15px rgba(66, 133, 244, 0.25); transition: all 0.3s ease; text-align: center;">
+          <a href="${routeUrl}" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; max-width: 340px; padding: 12px 24px; border: none; border-radius: var(--border-radius-sm); background: linear-gradient(135deg, #4285f4 0%, #34a853 100%); color: white; font-family: var(--font-sans); font-size: 0.9rem; font-weight: 700; cursor: pointer; text-decoration: none; box-shadow: 0 4px 15px rgba(66, 133, 244, 0.25); transition: all 0.3s ease; text-align: center;">
             <i class="fa-solid fa-location-arrow"></i> Abrir Rota Completa no Google Maps
           </a>
         </div>
