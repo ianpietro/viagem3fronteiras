@@ -351,6 +351,19 @@ p {
   margin-top: 4px;
 }
 
+.hero-hotel-link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(10, 20, 35, 0.4);
+  transition: all 0.3s ease;
+}
+
+.hero-hotel-link:hover {
+  color: var(--secondary) !important;
+  text-decoration-color: var(--secondary);
+}
+
 /* Timeline / Itinerary Section */
 .section-title-wrapper {
   text-align: center;
