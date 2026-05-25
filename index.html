@@ -605,6 +605,45 @@
       <p class="section-subtitle">Calcule a divisão exata de despesas comuns da viagem sem dor de cabeça no final.</p>
     </div>
 
+    <!-- Real-time Cloud Sync Card -->
+    <div class="glass-panel" id="sync-panel" style="padding: 16px 20px; border-radius: var(--border-radius-lg); background: linear-gradient(135deg, rgba(10, 30, 60, 0.45) 0%, rgba(15, 20, 35, 0.6) 100%); border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 24px; display: flex; flex-direction: column; gap: 12px; transition: var(--transition-smooth);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div id="syncStatusIcon" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 1.1rem; transition: all 0.3s ease;">
+            <i class="fa-solid fa-cloud"></i>
+          </div>
+          <div>
+            <h4 style="font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; color: var(--text-white); margin: 0; display: flex; align-items: center; gap: 6px;">
+              Sincronização em Tempo Real <span id="syncBadge" class="badge" style="font-size: 0.68rem; padding: 2px 6px; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); text-transform: uppercase;">Local</span>
+            </h4>
+            <p id="syncStatusText" style="font-size: 0.78rem; color: rgba(255,255,255,0.6); margin: 0; margin-top: 2px;">Seus dados estão salvos apenas localmente neste celular.</p>
+          </div>
+        </div>
+        <div id="syncActions" style="display: flex; gap: 8px;">
+          <button onclick="startNewCloudSync()" class="btn" style="padding: 6px 12px; font-size: 0.8rem; background: var(--secondary); border: none; border-radius: 6px; color: white; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 4px; transition: var(--transition-fast);"><i class="fa-solid fa-cloud-arrow-up"></i> Sincronizar Nuvem</button>
+          <button onclick="showConnectSyncInput()" class="btn" style="padding: 6px 12px; font-size: 0.8rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: white; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 4px; transition: var(--transition-fast);"><i class="fa-solid fa-link"></i> Conectar Código</button>
+        </div>
+      </div>
+      
+      <!-- Connect code input overlay (hidden by default) -->
+      <div id="syncInputWrapper" style="display: none; padding: 12px; background: rgba(0,0,0,0.15); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease;">
+        <p style="font-size: 0.78rem; color: rgba(255,255,255,0.7); margin-bottom: 8px;">Digite o código gerado no outro celular para conectar as contas:</p>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="syncCodeInput" placeholder="Ex: xYHBLnn3Uz" style="flex-grow: 1; padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.1); color: white; font-family: monospace; font-size: 0.9rem; text-transform: none;">
+          <button onclick="connectToExistingSync()" style="padding: 8px 16px; border: none; border-radius: 6px; background: #34c759; color: white; font-weight: 600; font-size: 0.85rem; cursor: pointer;">Conectar</button>
+          <button onclick="hideConnectSyncInput()" style="padding: 8px 12px; border: none; border-radius: 6px; background: rgba(255,255,255,0.1); color: white; font-size: 0.85rem; cursor: pointer;">Cancelar</button>
+        </div>
+      </div>
+
+      <!-- Connected info overlay (hidden by default) -->
+      <div id="syncConnectedInfo" style="display: none; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(52, 199, 89, 0.08); border-radius: 8px; border: 1px solid rgba(52, 199, 89, 0.2); transition: all 0.3s ease;">
+        <div style="font-size: 0.8rem; color: #34c759;">
+          <i class="fa-solid fa-circle-check"></i> Conectado à nuvem! Compartilhe o código: <strong id="syncCodeDisplay" style="font-family: monospace; font-size: 0.9rem; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; color: white; border: 1px solid rgba(255,255,255,0.1); margin-left: 4px;">xYHBLnn3Uz</strong>
+        </div>
+        <button onclick="disconnectCloudSync()" style="background: none; border: none; color: #ff3b30; font-size: 0.78rem; font-weight: 600; cursor: pointer; text-decoration: underline;">Desconectar</button>
+      </div>
+    </div>
+
     <!-- Debt Summary & Total Spent Dashboard Cards -->
     <div class="splitter-dashboard" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 30px;">
       <!-- Total Spent Card -->

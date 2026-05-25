@@ -182,6 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupScrollSpy();
   loadExpenses();
   recalculateSplitter();
+  initCloudSync();
 
   // Register PWA Service Worker for absolute offline support
   if ('serviceWorker' in navigator) {
@@ -645,6 +646,7 @@ function addExpense() {
   brlAmount = parseFloat(brlAmount.toFixed(2));
   
   const expenseItem = {
+    id: Date.now() + Math.random().toString(36).substring(2, 5), // Unique ID for absolute sync safety
     desc,
     originalAmount: amt,
     currency: curr,
@@ -656,6 +658,7 @@ function addExpense() {
   
   expenses.push(expenseItem);
   localStorage.setItem("trip_expenses", JSON.stringify(expenses));
+  uploadExpensesToCloud();
   
   // Clear inputs
   descInput.value = "";
@@ -671,6 +674,7 @@ function deleteExpense(index) {
   if (confirm(`Tem certeza que deseja excluir "${expenses[index].desc}"?`)) {
     expenses.splice(index, 1);
     localStorage.setItem("trip_expenses", JSON.stringify(expenses));
+    uploadExpensesToCloud();
     recalculateSplitter();
   }
 }
@@ -846,4 +850,308 @@ function shareDebtsToWhatsApp() {
   const formattedText = msg.replace(/\\n/g, "\n");
   
   window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(formattedText)}`, "_blank");
+}
+
+// ==========================================================================
+// PWA Cloud Synchronization Engine (Real-time Cross-device Sync)
+// ==========================================================================
+
+let syncIntervalId = null;
+const SYNC_API_BASE = "https://jsonbin-zeta.vercel.app/api/bins";
+
+// Initialize Cloud Sync state on app load
+function initCloudSync() {
+  const binId = localStorage.getItem("trip_sync_bin_id");
+  if (binId) {
+    showConnectedUI(binId);
+    fetchExpensesFromCloud(binId);
+    startSyncPolling(binId);
+  } else {
+    showDisconnectedUI();
+  }
+}
+
+// Start a completely new cloud bin for the trip
+async function startNewCloudSync() {
+  const syncStatusIcon = document.getElementById("syncStatusIcon");
+  if (syncStatusIcon) syncStatusIcon.style.animation = "spin 1s linear infinite";
+  
+  updateSyncStatusText("Criando sala na nuvem...");
+  
+  try {
+    const response = await fetch(SYNC_API_BASE, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ expenses: expenses })
+    });
+    
+    if (!response.ok) throw new Error("API call failed");
+    
+    const data = await response.json();
+    const binId = data.id;
+    
+    localStorage.setItem("trip_sync_bin_id", binId);
+    showConnectedUI(binId);
+    startSyncPolling(binId);
+    showSyncFlash("Conectado!", "#34c759");
+    
+  } catch (error) {
+    console.error("Cloud sync creation failed:", error);
+    updateSyncStatusText("Erro ao conectar. Tente novamente.");
+    if (syncStatusIcon) syncStatusIcon.style.animation = "none";
+    alert("Não foi possível criar a sala na nuvem. Verifique sua conexão com a internet!");
+  }
+}
+
+// Show/Hide code input overlay
+function showConnectSyncInput() {
+  document.getElementById("syncInputWrapper").style.display = "block";
+}
+
+function hideConnectSyncInput() {
+  document.getElementById("syncInputWrapper").style.display = "none";
+  document.getElementById("syncCodeInput").value = "";
+}
+
+// Connect to an existing room using a code (binId)
+async function connectToExistingSync() {
+  const codeInput = document.getElementById("syncCodeInput");
+  const binId = codeInput.value.trim();
+  
+  if (!binId) {
+    alert("Por favor, digite um código válido!");
+    return;
+  }
+  
+  updateSyncStatusText("Verificando código...");
+  
+  try {
+    const response = await fetch(`${SYNC_API_BASE}/${binId}`);
+    if (!response.ok) throw new Error("Invalid code or connection issue");
+    
+    const data = await response.json();
+    const cloudExpenses = data.expenses || [];
+    
+    // Deduplicate and merge expenses
+    if (confirm("Código válido! Deseja mesclar as despesas locais deste celular com as da nuvem?")) {
+      expenses = mergeExpenses(expenses, cloudExpenses);
+      localStorage.setItem("trip_expenses", JSON.stringify(expenses));
+      recalculateSplitter();
+      
+      // Update cloud with merged list
+      await fetch(`${SYNC_API_BASE}/${binId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ expenses: expenses })
+      });
+    } else {
+      // Just overwrite with cloud expenses
+      expenses = cloudExpenses;
+      localStorage.setItem("trip_expenses", JSON.stringify(expenses));
+      recalculateSplitter();
+    }
+    
+    localStorage.setItem("trip_sync_bin_id", binId);
+    showConnectedUI(binId);
+    startSyncPolling(binId);
+    hideConnectSyncInput();
+    showSyncFlash("Conectado!", "#34c759");
+    
+  } catch (error) {
+    console.error("Failed to connect to existing sync:", error);
+    updateSyncStatusText("Código inválido ou sem internet.");
+    alert("Código de sala inválido ou falha de conexão. Verifique o código e tente novamente!");
+  }
+}
+
+// Disconnect from cloud sync
+function disconnectCloudSync() {
+  if (confirm("Tem certeza que deseja desconectar? Suas contas não serão mais sincronizadas com outros celulares em tempo real (ficarão apenas localmente).")) {
+    stopSyncPolling();
+    localStorage.removeItem("trip_sync_bin_id");
+    showDisconnectedUI();
+    showSyncFlash("Desconectado", "rgba(255,255,255,0.4)");
+  }
+}
+
+// Fetch latest data from cloud (once)
+async function fetchExpensesFromCloud(binId) {
+  try {
+    const response = await fetch(`${SYNC_API_BASE}/${binId}`);
+    if (!response.ok) throw new Error("Fetch failed");
+    
+    const data = await response.json();
+    const cloudExpenses = data.expenses || [];
+    
+    // Merge and save
+    expenses = mergeExpenses(expenses, cloudExpenses);
+    localStorage.setItem("trip_expenses", JSON.stringify(expenses));
+    recalculateSplitter();
+    
+    // Update cloud with merged
+    await fetch(`${SYNC_API_BASE}/${binId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ expenses: expenses })
+    });
+    
+  } catch (error) {
+    console.error("Failed to fetch cloud expenses on load:", error);
+    updateSyncStatusText("Carregado offline. Conectando...");
+  }
+}
+
+// Upload expenses to cloud (runs in background on add/delete)
+async function uploadExpensesToCloud() {
+  const binId = localStorage.getItem("trip_sync_bin_id");
+  if (!binId) return;
+  
+  const syncStatusIcon = document.getElementById("syncStatusIcon");
+  if (syncStatusIcon) syncStatusIcon.style.animation = "spin 1s linear infinite";
+  updateSyncStatusText("Sincronizando com a nuvem...");
+  
+  try {
+    const response = await fetch(`${SYNC_API_BASE}/${binId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ expenses: expenses })
+    });
+    
+    if (!response.ok) throw new Error("Upload failed");
+    
+    updateSyncStatusText("Sincronizado na Nuvem");
+    showSyncFlash("✓ Salvo", "#34c759");
+    
+  } catch (error) {
+    console.error("Failed to upload expenses to cloud:", error);
+    updateSyncStatusText("Alterações salvas localmente (Offline)");
+    showSyncFlash("Sem Conexão", "#ff9f0a");
+  } finally {
+    if (syncStatusIcon) syncStatusIcon.style.animation = "none";
+  }
+}
+
+// Polling Loop: Check for cloud updates every 8 seconds
+function startSyncPolling(binId) {
+  stopSyncPolling();
+  
+  syncIntervalId = setInterval(async () => {
+    // Only poll if page is active
+    if (document.hidden) return;
+    
+    const syncStatusIcon = document.getElementById("syncStatusIcon");
+    if (syncStatusIcon) syncStatusIcon.style.animation = "spin 1s linear infinite";
+    
+    try {
+      const response = await fetch(`${SYNC_API_BASE}/${binId}`);
+      if (!response.ok) throw new Error("Polling fetch failed");
+      
+      const data = await response.json();
+      const cloudExpenses = data.expenses || [];
+      
+      // Compare arrays by length and IDs/hashes to check if actually changed
+      const localHash = JSON.stringify(expenses.map(e => ({ id: e.id, desc: e.desc, amt: e.brlAmount })));
+      const cloudHash = JSON.stringify(cloudExpenses.map(e => ({ id: e.id, desc: e.desc, amt: e.brlAmount })));
+      
+      if (localHash !== cloudHash) {
+        expenses = mergeExpenses(expenses, cloudExpenses);
+        localStorage.setItem("trip_expenses", JSON.stringify(expenses));
+        recalculateSplitter();
+        showSyncFlash("Contas Atualizadas!", "#34c759");
+      }
+      
+      updateSyncStatusText("Sincronizado na Nuvem");
+      
+    } catch (error) {
+      console.warn("Polling sync failed (probably offline):", error);
+      updateSyncStatusText("Conexão instável. Tentando novamente...");
+    } finally {
+      if (syncStatusIcon) syncStatusIcon.style.animation = "none";
+    }
+  }, 8000);
+}
+
+// Stop synchronization polling loop
+function stopSyncPolling() {
+  if (syncIntervalId) {
+    clearInterval(syncIntervalId);
+    syncIntervalId = null;
+  }
+}
+
+// Deduplicate and merge two arrays of expenses safely
+function mergeExpenses(local, cloud) {
+  const map = new Map();
+  
+  local.forEach(e => {
+    if (!e.id) e.id = Date.now() + Math.random().toString(36).substring(2, 5); // Fallback for old items
+    map.set(e.id, e);
+  });
+  
+  cloud.forEach(e => {
+    if (!e.id) e.id = Date.now() + Math.random().toString(36).substring(2, 5);
+    map.set(e.id, e);
+  });
+  
+  return Array.from(map.values());
+}
+
+// UI State Switchers
+function showConnectedUI(binId) {
+  document.getElementById("syncBadge").textContent = "Nuvem";
+  document.getElementById("syncBadge").style.background = "#34c759";
+  document.getElementById("syncBadge").style.color = "white";
+  document.getElementById("syncStatusText").textContent = "Contas sincronizadas com outros dispositivos em tempo real.";
+  
+  document.getElementById("syncActions").style.display = "none";
+  document.getElementById("syncInputWrapper").style.display = "none";
+  document.getElementById("syncConnectedInfo").style.display = "flex";
+  
+  document.getElementById("syncCodeDisplay").textContent = binId;
+  document.getElementById("syncStatusIcon").style.color = "#34c759";
+}
+
+function showDisconnectedUI() {
+  document.getElementById("syncBadge").textContent = "Local";
+  document.getElementById("syncBadge").style.background = "rgba(255,255,255,0.1)";
+  document.getElementById("syncBadge").style.color = "rgba(255,255,255,0.7)";
+  document.getElementById("syncStatusText").textContent = "Seus dados estão salvos apenas localmente neste celular.";
+  
+  document.getElementById("syncActions").style.display = "flex";
+  document.getElementById("syncInputWrapper").style.display = "none";
+  document.getElementById("syncConnectedInfo").style.display = "none";
+  document.getElementById("syncStatusIcon").style.color = "rgba(255,255,255,0.6)";
+}
+
+// Update status description text
+function updateSyncStatusText(text) {
+  const statusEl = document.getElementById("syncStatusText");
+  if (statusEl) statusEl.textContent = text;
+}
+
+// Quick status flash toast effect on the cloud icon
+function showSyncFlash(text, color) {
+  const statusIcon = document.getElementById("syncStatusIcon");
+  if (!statusIcon) return;
+  
+  const originalColor = statusIcon.style.color;
+  const originalHtml = statusIcon.innerHTML;
+  
+  statusIcon.style.color = color;
+  statusIcon.innerHTML = `<i class="fa-solid fa-arrows-rotate"></i>`;
+  statusIcon.style.animation = "spin 0.5s ease-out 1";
+  
+  setTimeout(() => {
+    statusIcon.style.animation = "none";
+    statusIcon.style.color = originalColor;
+    statusIcon.innerHTML = originalHtml;
+  }, 1000);
 }
