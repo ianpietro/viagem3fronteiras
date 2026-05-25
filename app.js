@@ -1115,14 +1115,14 @@ function mergeExpenses(local, cloud) {
   
   local.forEach(e => {
     if (!e.id) e.id = Date.now() + Math.random().toString(36).substring(2, 5);
-    e.updatedAt = e.updatedAt || Date.now();
+    e.updatedAt = e.updatedAt || 0; // Legacy items default to 0 (oldest)
     e.deleted = e.deleted || false;
     map.set(e.id, e);
   });
   
   cloud.forEach(e => {
     if (!e.id) e.id = Date.now() + Math.random().toString(36).substring(2, 5);
-    e.updatedAt = e.updatedAt || Date.now();
+    e.updatedAt = e.updatedAt || 0; // Legacy items default to 0 (oldest)
     e.deleted = e.deleted || false;
     
     const existing = map.get(e.id);
