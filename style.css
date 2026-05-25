@@ -1427,4 +1427,27 @@ footer .footer-brand {
   100% { transform: rotate(360deg); }
 }
 
+/* Radar Gastronômico Curated Restaurant Links */
+.foodie-link {
+  color: #ff9f0a;
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 1.5px dashed rgba(255, 159, 10, 0.45);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
 
+.foodie-link::before {
+  content: "🍽️";
+  font-size: 0.85rem;
+}
+
+.foodie-link:hover {
+  color: #ffcc00;
+  border-bottom-color: #ffcc00;
+  text-shadow: 0 0 10px rgba(255, 159, 10, 0.5);
+  transform: translateY(-1px);
+}

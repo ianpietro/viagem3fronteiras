@@ -9,7 +9,7 @@ const defaultItinerary = [
     dayTitle: "O Pouso Descompassado e a Chegada",
     date: "Terça-feira, 30 de Junho",
     hotel: "Village San Francisco",
-    restaurant: "Bona Trattoria ou Quinta da Oliva",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'bona\'); event.stopPropagation(); return false;" class="foodie-link">Bona Trattoria</a> ou Quinta da Oliva',
     transport: "Carro Alugado (Retirada às 19:30 no aeroporto)",
     weatherIcon: "fa-sun",
     weatherTemp: "24° / 14°C",
@@ -26,7 +26,7 @@ const defaultItinerary = [
     dayTitle: "Itaipu, Circuitos Culturais e Pôr do Sol no Marco",
     date: "Quarta-feira, 01 de Julho",
     hotel: "Village San Francisco",
-    restaurant: "Restaurante Barracão & Cabeza de Vaca",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'barracao\'); event.stopPropagation(); return false;" class="foodie-link">Restaurante Barracão</a> & <a href="#" onclick="openFoodieModal(\'cabeza\'); event.stopPropagation(); return false;" class="foodie-link">Cabeza de Vaca</a>',
     transport: "Carro Alugado (Dia Inteiro)",
     weatherIcon: "fa-cloud-sun",
     weatherTemp: "24° / 13°C",
@@ -45,7 +45,7 @@ const defaultItinerary = [
     dayTitle: "Cataratas, Almoço no Parque, Aves e Devolução do Carro",
     date: "Quinta-feira, 02 de Julho",
     hotel: "Village San Francisco",
-    restaurant: "Bistrô da Mata (Parque das Aves)",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'bistro\'); event.stopPropagation(); return false;" class="foodie-link">Bistrô da Mata</a>',
     transport: "Carro Alugado (Devolução às 19:00) + Uber/Táxi",
     weatherIcon: "fa-cloud-showers-heavy",
     weatherTemp: "23° / 10°C",
@@ -66,7 +66,7 @@ const defaultItinerary = [
     dayTitle: "Paraguai Dia 1 (Compras Livres)",
     date: "Sexta-feira, 03 de Julho",
     hotel: "Village San Francisco",
-    restaurant: "Opção a escolher (Ciudad del Este) & Bella Italia (Noite)",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'sax\'); event.stopPropagation(); return false;" class="foodie-link">SAX Palace</a> (Paraguai) & <a href="#" onclick="openFoodieModal(\'bella\'); event.stopPropagation(); return false;" class="foodie-link">Noite Italiana (Bella Italia)</a>',
     transport: "A pé / Ônibus Local / Táxi (decidido na hora conforme o trânsito)",
     weatherIcon: "fa-cloud-sun",
     weatherTemp: "19° / 8°C",
@@ -83,7 +83,7 @@ const defaultItinerary = [
     dayTitle: "Paraguai Dia 2 (Compras Livres) & Noite de Barzinhos",
     date: "Sábado, 04 de Julho",
     hotel: "Village San Francisco",
-    restaurant: "Opções no Paraguai & Bares da Av. Jorge Schimmelpfeng (Noite)",
+    restaurant: 'Livre no Paraguai & <a href="#" onclick="openFoodieModal(\'bares\'); event.stopPropagation(); return false;" class="foodie-link">Bares da Av. Jorge Schimmelpfeng</a>',
     transport: "A pé / Ônibus Local / Táxi (a decidir na hora)",
     weatherIcon: "fa-sun",
     weatherTemp: "19° / 8°C",
@@ -100,7 +100,7 @@ const defaultItinerary = [
     dayTitle: "A Travessia e a Vibe da Feirinha",
     date: "Domingo, 05 de Julho",
     hotel: "Hospedaje Jose Gorgues",
-    restaurant: "La Feirinha (Puerto Iguazú)",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'feirinha\'); event.stopPropagation(); return false;" class="foodie-link">La Feirinha</a>',
     transport: "Táxi Argentino Oficial + a pé",
     weatherIcon: "fa-sun",
     weatherTemp: "19° / 9°C",
@@ -117,7 +117,7 @@ const defaultItinerary = [
     dayTitle: "Cataratas Argentinas e Garganta del Diablo",
     date: "Segunda-feira, 06 de Julho",
     hotel: "Hospedaje Jose Gorgues",
-    restaurant: "El Quincho del Tío Querido ou Restaurante Aqva (Noite)",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'quincho\'); event.stopPropagation(); return false;" class="foodie-link">El Quincho del Tio Querido</a> ou <a href="#" onclick="openFoodieModal(\'aqva\'); event.stopPropagation(); return false;" class="foodie-link">Restaurante Aqva</a>',
     transport: "Ônibus Urbano (Rio Uruguay) ou Táxi Local",
     weatherIcon: "fa-cloud-sun",
     weatherTemp: "21° / 11°C",
@@ -133,7 +133,7 @@ const defaultItinerary = [
     dayTitle: "Hito Tres Fronteras, La Aripuca e Vinotecas",
     date: "Terça-feira, 07 de Julho",
     hotel: "Hospedaje Jose Gorgues",
-    restaurant: "Zona Gastronômica Central",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'zona_ar\'); event.stopPropagation(); return false;" class="foodie-link">Zona Gastronômica AR</a>',
     transport: "Caminhada leve & Táxi Local",
     weatherIcon: "fa-cloud-showers-heavy",
     weatherTemp: "19° / 10°C",
@@ -149,7 +149,7 @@ const defaultItinerary = [
     dayTitle: "A Despedida e o Retorno (Frentes Separadas)",
     date: "Quarta-feira, 08 de Julho",
     hotel: "Check-out (Retorno)",
-    restaurant: "Medialunas no Centro & Aeroporto",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'medialunas\'); event.stopPropagation(); return false;" class="foodie-link">Cafés e Medialunas</a>',
     transport: "Táxi Argentino Pré-contratado + Voo",
     weatherIcon: "fa-cloud-showers-heavy",
     weatherTemp: "19° / 15°C",
@@ -1337,3 +1337,207 @@ async function forceAppUpdate() {
     }
   }
 }
+
+// 17. Radar Gastronômico - Curated Review Database (TripAdvisor/Google Reviews Distilled)
+const foodieDatabase = {
+  bona: {
+    emoji: "🍽️",
+    name: "Bona Trattoria",
+    specialty: "Massas Autorais & Cozinha Italiana Sofisticada",
+    order: "O emblemático <strong>Filetto Di Manzo Con Salsa Al Tartufi</strong> (filé mignon grelhado com pappardelle na manteiga trufada e pistache) ou a <strong>Parmegiana Du Chef</strong> com mozzarella de búfala e espaguete fresco.",
+    payment: "Aceita cartões convencionais e Pix de forma muito ágil.",
+    tips: [
+      "<strong>Massa no Queijo:</strong> Eles preparam o famoso <em>Cacio e Pepe</em> e massas especiais sendo finalizadas ao vivo dentro de uma enorme peça de queijo Grana Padano. Fica incrível!",
+      "<strong>Cozinha Show:</strong> O restaurante conta com uma cozinha totalmente envidraçada ('cozinha show') onde a família pode assistir os chefs executando os pratos assinados pelo chef Salvatore Loi.",
+      "<strong>Reserva Recomendada:</strong> O local é lindamente decorado e muito concorrido. Fazer reserva com antecedência é fundamental para jantares de fim de semana."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Bona+Trattoria+Foz+do+Iguacu"
+  },
+  barracao: {
+    emoji: "🥘",
+    name: "Restaurante Barracão",
+    specialty: "Comida Regional & Caipira no Fogão a Lenha",
+    order: "Buffet livre completo com costelinha de porco, feijão tropeiro, polenta frita, linguiça artesanal e a espetacular mesa de doces caseiros (com doce de leite cremoso e compotas locais inclusa).",
+    payment: "Preço fixo por pessoa super em conta. Aceita cartões e Pix.",
+    tips: [
+      "<strong>Redes de Descanso:</strong> O local conta com uma área verde externa gigante cheia de árvores nativas e redes para deitar depois de comer. Perfeito para relaxar após a visita técnica à Itaipu!",
+      "<strong>Chegue Cedo:</strong> O restaurante é enorme e muito disputado por moradores locais. Chegar por volta das 11:50 garante mesas em áreas mais arejadas e próximas ao buffet.",
+      "O ambiente conta com brinquedos ao ar livre para as crianças e pequenos animais circulando na grama."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Restaurante+Barracao+Foz+do+Iguacu"
+  },
+  cabeza: {
+    emoji: "🌅",
+    name: "Cabeza de Vaca",
+    specialty: "Grelhados & Culinária Regional de Fronteira",
+    order: "Picanha na chapa com mandioca frita na manteiga de garrafa, ou pratos com peixes regionais (Pacu na brasa). A porção de pastéis de costela desfiada de entrada é deliciosa.",
+    payment: "Aceita Pix e todos os cartões. Jantar no local dá prioridade para os shows de dança.",
+    tips: [
+      "<strong>O Deque Perfeito:</strong> Tente conseguir uma mesa na **área externa do deque**. É a melhor localização para assistir ao espetáculo do pôr do sol de inverno sobre o encontro dos rios Iguaçu e Paraná.",
+      "<strong>Serviço em Dias de Show:</strong> As avaliações de viajantes reais alertam que, em noites de casa cheia, os pedidos de comida podem demorar. Faça seu pedido completo logo ao sentar.",
+      "O show cultural de dança ao vivo é gratuito, ao ar livre, e começa pontualmente por volta das 19:30."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Restaurante+Cabeza+de+Vaca+Foz+do+Iguacu"
+  },
+  bistro: {
+    emoji: "🦜",
+    name: "Bistrô da Mata",
+    specialty: "Lanches Gourmet, Pratos Rápidos & Cafés Especiais",
+    order: "Sanduíches artesanais na chapa, omeletes especiais recheados e risotos leves. O bolo caseiro de cenoura com cobertura quente de chocolate é imbatível!",
+    payment: "Fica na entrada do Parque das Aves. Aceita cartões e Pix.",
+    tips: [
+      "<strong>Sinfonia da Natureza:</strong> Todo cercado por vidraças amplas com vista para a Mata Atlântica nativa. Você almoça ouvindo o canto suave das aves.",
+      "<strong>Logística Prática:</strong> Ideal para almoçar sem perder tempo entre as visitas das Cataratas Brasileiras e a trilha dos viveiros gigantes no Parque das Aves.",
+      "As mesas próximas à janela de vidro oferecem um clima super acolhedor e integrador."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Bistro+da+Mata+Parque+das+Aves+Foz"
+  },
+  sax: {
+    emoji: "🏙️",
+    name: "SAX Palace",
+    specialty: "Gastronomia Internacional de Alto Padrão",
+    order: "Massas artesanais trufadas, risoto de frutos do mar ou filé mignon ao molho de vinho nobre. O Tiramisu clássico finalizado na mesa é imperdível.",
+    payment: "Preços calculados em Dólar (USD). Aceita dinheiro (BRL/USD/ARS) e cartões. Wise funciona sem nenhuma taxa adicional de máquina.",
+    tips: [
+      "<strong>O Refúgio Perfeito:</strong> Localizado no topo da badalada SAX em Ciudad del Este. Possui um ambiente luxuoso, ar-condicionado fortíssimo e banheiros impecáveis, sendo um refúgio calmo e fresco após as compras.",
+      "<strong>Vista da Fronteira:</strong> As grandes vidraças proporcionam uma vista aérea fantástica da Ponte da Amizade e do Rio Paraná.",
+      "Os pratos são de alta gastronomia e possuem preço de padrão internacional, mas a paz e o conforto físico de almoçar ali valem cada dólar."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=SAX+Palace+Ciudad+del+Este"
+  },
+  bella: {
+    emoji: "🧀",
+    name: "Noite Italiana (Bella Italia)",
+    specialty: "Banquete Farto de Queijos & Rodízio de Massas Frescas",
+    order: "Foque na monumental mesa de queijos importados (mais de 30 tipos, incluindo queijos trufados e Grana Padano gigante), frios finos e no rodízio de massas artesanais frescas que passa na mesa.",
+    payment: "Preço fixo por pessoa (buffet + rodízio de massas + buffet de doces inclusos). Bebidas cobradas à parte.",
+    tips: [
+      "<strong>Estratégia de Fartura:</strong> A quantidade de comida é colossal. Dica número 1 dos viajantes: vá com muita calma na mesa de queijos iniciais para deixar espaço para o rodízio de massas e as sobremesas que vêm depois.",
+      "<strong>Reserva Obrigatória:</strong> É uma atração clássica e lota 100% dos assentos. Faça sua reserva no site ou recepção com bastante antecedência.",
+      "O ambiente tem trilha sonora ao vivo e decoração italiana rústica que remete às grandes cantinas tradicionais."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Noite+Italiana+Hotel+Bella+Italia+Foz"
+  },
+  bares: {
+    emoji: "🍺",
+    name: "Bares da Av. Jorge Schimmelpfeng",
+    specialty: "Chopp Gelado, Drinks & Petiscos de Boteco",
+    order: "Chopp geladíssimo tirado na hora, caipirinhas trufadas, tábuas de grelhados na chapa e porções generosas de batata com queijo e bacon.",
+    payment: "Aceitam cartões e Pix. Fica na avenida mais movimentada de Foz.",
+    tips: [
+      "<strong>Qual bar escolher?</strong> O <strong>Capitão Bar</strong> é super tradicional, famoso pelo chopp trincando de gelado e clima de happy hour. O <strong>Rafain Chopp</strong> conta com excelente música ao vivo e porções muito fartas.",
+      "<strong>Estacionamento e Acesso:</strong> Fica no coração central gastronômico de Foz. Muito fácil de ir e voltar de Uber."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Capitao+Bar+Foz+do+Iguacu"
+  },
+  feirinha: {
+    emoji: "🌮",
+    name: "La Feirinha de Puerto Iguazú",
+    specialty: "Empanadas Fritas, Queijos Temperados & Azeitonas Recheadas",
+    order: "Peça as <strong>empanadas fritas na hora</strong> (as de carne desfiada e presunto e queijo são fantásticas) e as <strong>azeitonas gigantes recheadas</strong> (com roquefort ou alho curtido no azeite).",
+    payment: "<strong>Regra do Dinheiro Vivo:</strong> Evite pagar em cartão internacional, pois cobram taxa de máquina de até 15%! As barracas maiores aceitam <strong>Real (BRL) físico</strong> ou até Pix brasileiro com boa taxa.",
+    tips: [
+      "<strong>Sem Frescura:</strong> O ambiente é extremamente simples e pitoresco, com mesas de plástico nas calçadas. Ótimo para 'botecar' de forma descontraída à noite.",
+      "<strong>Barracas Famosas:</strong> A 'Barraca da Miriam' e a 'Barraca do Boy' são as preferidas dos brasileiros pela alta qualidade das empanadas e simpatia no atendimento.",
+      "Ótimo local para comprar doce de leite (marcas Chimbote, Mardel e San Ignacio), vinhos e caixas de alfajor Cachafaz para trazer de viagem."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=La+Feirinha+Puerto+Iguazu"
+  },
+  quincho: {
+    emoji: "🥩",
+    name: "El Quincho del Tio Querido",
+    specialty: "Parrilla Clássica Argentina & Shows Culturais",
+    order: "O fenomenal <strong>Ojo de Bife</strong> ou o tradicional <strong>Bife de Chorizo</strong> grelhados na brasa missioneira. A <em>Provoleta</em> grelhada com orégano na chapa é a entrada perfeita.",
+    payment: "Aceita Real (BRL), Dólar (USD), pesos e cartões internacionais (Wise passa perfeitamente com ótima conversão oficial).",
+    tips: [
+      "<strong>Show e Reserva:</strong> O sensacional show de tango e música folclórica ao vivo acontece todas as noites no palco principal. Reserve com antecedência no site oficial e peça uma mesa próxima ao palco!",
+      "<strong>O Ponto da Carne:</strong> A parrilla argentina tradicional tende a deixar a carne um ponto mais passada do que o costume brasileiro. Se gosta de carne vermelha e suculenta, peça <strong>'jugoso'</strong> (ao ponto para menos).",
+      "O atendimento é extremamente elogiado e cortês."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=El+Quincho+del+Tio+Querido+Puerto+Iguazu"
+  },
+  aqva: {
+    emoji: "🐟",
+    name: "Restaurante Aqva",
+    specialty: "Cortes Nobres Argentinos & Peixes de Rio de Alta Gastronomia",
+    order: "O requintado <strong>Bife de Chorizo Aqva</strong> com redução especial, ou pratos com peixes nobres locais dos rios Paraná e Iguaçu, como o <strong>Surubí</strong> ao molho de queijos ou grelhado com ervas finas.",
+    payment: "Aceita cartões internacionais (Wise/Nomad) e dinheiro vivo de forma amigável.",
+    tips: [
+      "<strong>Clima Intimista:</strong> É um ambiente mais silencioso, elegante e romântico se comparado às churrascarias tradicionais. Ideal para um jantar sofisticado em família.",
+      "<strong>Adega de Malbecs:</strong> Possui uma carta de vinhos espetacular com as melhores seleções de Mendonza a preços muito baixos devido ao câmbio argentino.",
+      "Fica super bem localizado na avenida gastronômica central de Puerto Iguazú."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Restaurante+Aqva+Puerto+Iguazu"
+  },
+  zona_ar: {
+    emoji: "🍷",
+    name: "Zona Gastronômica Central AR",
+    specialty: "Parrillas, Vinotecas & Massas Argentinas",
+    order: "Massas frescas recheadas com abóbora e nozes (sorrentinos), cortes de Bife de Lomo, sorvetes artesanais e vinhos tintos.",
+    payment: "Dinheiro em espécie (Real ou Pesos) é amplamente aceito e dá margem a descontos em algumas lojas.",
+    tips: [
+      "<strong>Passeio Noturno:</strong> Fica nas avenidas Córdoba, Brasil e adjacências no centro. Super seguro para caminhar a pé à noite, saindo da hospedagem Jose Gorgues.",
+      "Aproveite para visitar as vinotecas tradicionais (Caminos del Vino / Tierra de Vinos) para comprar rótulos raros com consultoria de sommeliers locais."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Restaurantes+Centro+Puerto+Iguazu"
+  },
+  medialunas: {
+    emoji: "🥐",
+    name: "Cafés e Medialunas Argentinas",
+    specialty: "Cafeteria Clássica & Medialunas Assadas na Hora",
+    order: "Medialunas de manteca (amanteigadas e doces) bem quentinhas, recheadas com doce de leite, acompanhadas de café com leite ou submarino (leite quente com barra de chocolate derretendo).",
+    payment: "Dinheiro vivo em espécie (Real ou Peso) agiliza muito o atendimento em padarias e cafés locais.",
+    tips: [
+      "<strong>Padarias Centrais:</strong> Panificadoras locais como a 'Panificados' ou o clássico 'Café de la Plaza' servem fornadas de medialunas crocantes todas as manhãs.",
+      "Ideal para o café de despedida em Puerto Iguazú antes de carregar o táxi para a aduana."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Cafeterias+Puerto+Iguazu"
+  }
+};
+
+// Open Foodie Modal with Curated Data
+function openFoodieModal(key) {
+  const data = foodieDatabase[key];
+  if (!data) return;
+  
+  document.getElementById("foodieEmoji").innerHTML = data.emoji;
+  document.getElementById("foodieName").innerText = data.name;
+  document.getElementById("foodieSpecialty").innerText = data.specialty;
+  document.getElementById("foodieOrder").innerHTML = data.order;
+  document.getElementById("foodiePayment").innerHTML = data.payment;
+  
+  // Clean and fill tips
+  const tipsContainer = document.getElementById("foodieTips");
+  tipsContainer.innerHTML = "";
+  data.tips.forEach(tip => {
+    const li = document.createElement("li");
+    li.innerHTML = tip;
+    tipsContainer.appendChild(li);
+  });
+  
+  // Set maps link
+  document.getElementById("foodieMapsBtn").setAttribute("href", data.mapsUrl);
+  
+  // Open modal
+  const modal = document.getElementById("foodieModal");
+  if (modal) {
+    modal.style.display = "flex";
+  }
+}
+
+// Close Foodie Modal
+function closeFoodieModal() {
+  const modal = document.getElementById("foodieModal");
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
+
+// Close on outside click
+function closeFoodieModalOutside(event) {
+  const modal = document.getElementById("foodieModal");
+  if (event.target === modal) {
+    closeFoodieModal();
+  }
+}
+
