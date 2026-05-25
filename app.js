@@ -607,13 +607,15 @@ function updateCurrencySymbol() {
   } else if (val === "ARS") {
     symbolSpan.textContent = "$";
     alertDiv.style.display = "block";
-    const brlVal = (amt * EXCHANGE_RATE_ARS).toFixed(2);
-    detailsSpan.textContent = `$${amt.toLocaleString('pt-BR')} ARS ≈ R$ ${brlVal}`;
+    const brlVal = parseFloat((amt * EXCHANGE_RATE_ARS).toFixed(2));
+    const formattedBrl = brlVal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    detailsSpan.textContent = `$${amt.toLocaleString('pt-BR')} ARS ≈ R$ ${formattedBrl}`;
   } else if (val === "USD") {
     symbolSpan.textContent = "$";
     alertDiv.style.display = "block";
-    const brlVal = (amt * EXCHANGE_RATE_USD).toFixed(2);
-    detailsSpan.textContent = `$${amt.toLocaleString('pt-BR')} USD ≈ R$ ${brlVal}`;
+    const brlVal = parseFloat((amt * EXCHANGE_RATE_USD).toFixed(2));
+    const formattedBrl = brlVal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    detailsSpan.textContent = `$${amt.toLocaleString('pt-BR')} USD ≈ R$ ${formattedBrl}`;
   }
 }
 
@@ -819,7 +821,7 @@ function recalculateSplitter() {
       item.style.cssText = "display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.02); padding: 12px; border-radius: var(--border-radius-sm); border: 1px solid rgba(0,0,0,0.04); transition: var(--transition-fast);";
       
       let currencyStr = "";
-      if (exp.currency !== "BRL") {
+      if (exp.currency && exp.currency !== "BRL" && exp.originalAmount !== undefined) {
         const symbol = exp.currency === "ARS" ? "$" : "$";
         currencyStr = `<span style="font-size: 0.78rem; color: var(--text-light); display: block;">Original: ${symbol}${exp.originalAmount.toLocaleString('pt-BR')} ${exp.currency}</span>`;
       }
@@ -1125,6 +1127,8 @@ function mergeExpenses(local, cloud) {
     if (!e.id) e.id = Date.now() + Math.random().toString(36).substring(2, 5);
     e.updatedAt = e.updatedAt || 0; // Legacy items default to 0 (oldest)
     e.deleted = e.deleted || false;
+    e.currency = e.currency || "BRL";
+    e.originalAmount = e.originalAmount !== undefined ? e.originalAmount : e.brlAmount;
     map.set(e.id, e);
   });
   
@@ -1132,6 +1136,8 @@ function mergeExpenses(local, cloud) {
     if (!e.id) e.id = Date.now() + Math.random().toString(36).substring(2, 5);
     e.updatedAt = e.updatedAt || 0; // Legacy items default to 0 (oldest)
     e.deleted = e.deleted || false;
+    e.currency = e.currency || "BRL";
+    e.originalAmount = e.originalAmount !== undefined ? e.originalAmount : e.brlAmount;
     
     const existing = map.get(e.id);
     if (!existing || e.updatedAt > existing.updatedAt) {
