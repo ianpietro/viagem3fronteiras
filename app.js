@@ -66,14 +66,14 @@ const defaultItinerary = [
     dayTitle: "Paraguai Dia 1 (Compras Livres)",
     date: "Sexta-feira, 03 de Julho",
     hotel: "Village San Francisco",
-    restaurant: '<a href="#" onclick="openFoodieModal(\'sax\'); event.stopPropagation(); return false;" class="foodie-link">SAX Palace</a> (Paraguai) & <a href="#" onclick="openFoodieModal(\'bella\'); event.stopPropagation(); return false;" class="foodie-link">Noite Italiana (Bella Italia)</a>',
+    restaurant: '<a href="#" onclick="openFoodieModal(\'sax\'); event.stopPropagation(); return false;" class="foodie-link">SAX Palace</a> ou <a href="#" onclick="openFoodieModal(\'santelmo\'); event.stopPropagation(); return false;" class="foodie-link">San Telmo</a> (Paraguai) & <a href="#" onclick="openFoodieModal(\'bella\'); event.stopPropagation(); return false;" class="foodie-link">Noite Italiana (Bella Italia)</a>',
     transport: "A pé / Ônibus Local / Táxi (decidido na hora conforme o trânsito)",
     weatherIcon: "fa-cloud-sun",
     weatherTemp: "19° / 8°C",
     activities: [
       { time: "06:00", title: "Saída Rumo ao Paraguai", desc: "Saída do Village San Francisco rumo a Ciudad del Este. Deslocamento bem cedo em direção à Ponte da Amizade para cruzar antes de formar qualquer trânsito." },
       { time: "07:00", title: "Compras Livres pelas Grandes Lojas", desc: "Primeiro round de compras totalmente livre pelas grandes lojas âncoras (Cellshop, Shopping China, Monalisa, Shopping Terra Nova) à medida que abrem suas portas. Sem pressa e focado no que der vontade! (07:00 às 12:30)" },
-      { time: "12:30", title: "Pausa para o Almoço (Escolhas Reais)", desc: "Pausa para refeição (12:30 às 14:00). Escolham na hora de acordo com o ritmo das compras:<br><br>• <strong>SAX Palace</strong>: Sofisticado, ar-condicionado forte, pratos premium e vista panorâmica incrível para a ponte e o Rio Paraná.<br>• <strong>Restaurante Shopping China (3º piso Shopping Paris)</strong>: Praça de alimentação gigante de alto padrão, ideal para comer bem sem sair do prédio.<br>• <strong>Baviera</strong>: Carnes grelhadas e culinária alemã tradicional, porções fartas e ambiente seguro.<br>• <strong>Café Monalisa</strong>: Executivos leves, cafés e salgados gourmet rápidos dentro da própria loja.<br>• <strong>Shopping Del Este</strong>: Ao lado da aduana paraguaia, conveniência pura com grelhados rápidos." },
+      { time: "12:30", title: "Pausa para o Almoço (Escolhas Reais)", desc: "Pausa para refeição (12:30 às 14:00). Escolham na hora de acordo com o ritmo das compras:<br><br>• <strong><a href=\"#\" onclick=\"openFoodieModal('santelmo'); event.stopPropagation(); return false;\" class=\"foodie-link\">San Telmo</a></strong>: Resto-café moderno no microcentro, próximo a Cellshop e Nissei. Preço excelente, ótimas empanadas, croissants recheados e pratos executivos práticos com cartão de consumo individual.<br>• <strong>SAX Palace</strong>: Sofisticado, ar-condicionado forte, pratos premium e vista panorâmica incrível para a ponte e o Rio Paraná.<br>• <strong>Restaurante Shopping China (3º piso Shopping Paris)</strong>: Praça de alimentação gigante de alto padrão, ideal para comer bem sem sair do prédio.<br>• <strong>Baviera</strong>: Carnes grelhadas e culinária alemã tradicional, porções fartas e ambiente seguro.<br>• <strong>Café Monalisa</strong>: Executivos leves, cafés e salgados gourmet rápidos dentro da própria loja.<br>• <strong>Shopping Del Este</strong>: Ao lado da aduana paraguaia, conveniência pura com grelhados rápidos." },
       { time: "14:00", title: "Repescagem e Retorno", desc: "Breve repescagem de lojas e retorno a Foz (a pé cruzando a ponte ou pegando um táxi local, dependendo do trânsito na aduana). Parada obrigatória na hospedagem para guardar sacolas com segurança." },
       { time: "Noite", title: "Noite Italiana no Hotel Bella Italia", desc: "Jantar especial na famosa Noite Italiana (famoso rodízio de queijos gigantesco e massas artesanais)." }
     ]
@@ -83,14 +83,14 @@ const defaultItinerary = [
     dayTitle: "Paraguai Dia 2 (Compras Livres) & Noite de Barzinhos",
     date: "Sábado, 04 de Julho",
     hotel: "Village San Francisco",
-    restaurant: 'Livre no Paraguai & <a href="#" onclick="openFoodieModal(\'bares\'); event.stopPropagation(); return false;" class="foodie-link">Bares da Av. Jorge Schimmelpfeng</a>',
+    restaurant: '<a href="#" onclick="openFoodieModal(\'santelmo\'); event.stopPropagation(); return false;" class="foodie-link">San Telmo</a> (Paraguai) & <a href="#" onclick="openFoodieModal(\'bares\'); event.stopPropagation(); return false;" class="foodie-link">Bares da Av. Jorge Schimmelpfeng</a>',
     transport: "A pé / Ônibus Local / Táxi (a decidir na hora)",
     weatherIcon: "fa-sun",
     weatherTemp: "19° / 8°C",
     activities: [
       { time: "07:30", title: "Saída Cedo do Condomínio", desc: "Saída em direção à ponte (a pé ou de ônibus). Como o comércio no Paraguai fecha mais cedo aos sábados (por volta das 15:00), manter a saída cedo é fundamental." },
       { time: "08:00", title: "Segundo Bloco de Compras Livres", desc: "Tempo precioso para pesquisar preços pendentes, voltar às lojas preferidas ou garantir itens que faltaram no dia anterior (08:00 às 13:00)." },
-      { time: "13:00", title: "Pausa para o Almoço", desc: "Almoço livre (13:00 às 14:15). Recomenda-se focar na Praça do Shopping China (se ainda estiverem no Shopping Paris) ou na do Shopping Del Este (se já estiverem finalizando perto da saída da aduana)." },
+      { time: "13:00", title: "Pausa para o Almoço", desc: "Almoço livre (13:00 às 14:15). Recomenda-se focar no agradável <a href=\"#\" onclick=\"openFoodieModal('santelmo'); event.stopPropagation(); return false;\" class=\"foodie-link\">San Telmo</a> (microcentro) ou nas praças de alimentação do Shopping China / Shopping Del Este." },
       { time: "14:30", title: "Retorno Definitivo ao Brasil", desc: "Retorno definitivo ao Brasil (a pé ou de táxi) para escapar do gargalo de trânsito da ponte no fechamento massivo do comércio." },
       { time: "Noite", title: "Bares na Jorge Schimmelpfeng", desc: "Jantar e drinks nos bares animados e centrais da principal avenida gastronômica de Foz (como o Capitão Bar ou Rafain Chopp)." }
     ]
@@ -1340,6 +1340,19 @@ async function forceAppUpdate() {
 
 // 17. Radar Gastronômico - Curated Review Database (TripAdvisor/Google Reviews Distilled)
 const foodieDatabase = {
+  santelmo: {
+    emoji: "🥐",
+    name: "San Telmo Resto-Café",
+    specialty: "Cafeteria Moderna & Pratos Executivos de Custo-Benefício",
+    order: "Famoso pelos <strong>croissants recheados na chapa</strong> (presunto, queijo, ovo e bacon), empanadas crocantes feitas na hora e pratos como o Filé à Napolitana no almoço. O cheesecake de morango de sobremesa é espetacular.",
+    payment: "Preços excelentes e muito acessíveis. Aceita cartões (inclusive Wise) e dinheiro em espécie (BRL/USD/Guaranies).",
+    tips: [
+      "<strong>Cartão de Consumo:</strong> Ao entrar, cada pessoa recebe um cartão de consumo individual, facilitando imensamente a divisão da conta no caixa na hora de ir embora.",
+      "<strong>Localização Estratégica:</strong> Localizado no coração do microcentro de Ciudad del Este (Av. Carlos Antonio López), fica super perto de grandes lojas como Cellshop e Nissei. Perfeito para uma parada estratégica sem desviar da rota de compras!",
+      "<strong>Ambiente Acolhedor:</strong> Espaço moderno, climatizado e muito limpo, excelente para descansar as pernas e recarregar as energias com um ótimo expresso."
+    ],
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=San+Telmo+Resto+Cafe+Ciudad+del+Este"
+  },
   bona: {
     emoji: "🍽️",
     name: "Bona Trattoria",
