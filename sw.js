@@ -1,4 +1,4 @@
-const CACHE_NAME = 'triplice-frontera-cache-v31';
+const CACHE_NAME = 'triplice-frontera-cache-v32';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -53,7 +53,7 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
+    caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
       if (cachedResponse) {
         // Fetch new version in background to update cache (Stale-While-Revalidate)
         fetch(event.request)
