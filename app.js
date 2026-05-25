@@ -468,26 +468,12 @@ async function updateLiveDashboardWeather() {
   }
 }
 
-// 12. PWA Bottom Navigation (Scroll Detection)
+// 12. PWA Bottom Navigation (Always Visible)
 function setupBottomNav() {
   const bottomNav = document.getElementById("bottomNav");
-  if (!bottomNav) return;
-  
-  window.addEventListener("scroll", () => {
-    // If splitter view is active, the bottom nav must ALWAYS be visible
-    const splitterView = document.getElementById("splitter-view");
-    if (splitterView && splitterView.style.display === "block") {
-      bottomNav.classList.add("visible");
-      return;
-    }
-    
-    // Show bottom nav after scrolling down 300px from hero
-    if (window.scrollY > 300) {
-      bottomNav.classList.add("visible");
-    } else {
-      bottomNav.classList.remove("visible");
-    }
-  });
+  if (bottomNav) {
+    bottomNav.classList.add("visible");
+  }
 }
 
 // 13. PWA ScrollSpy (Highlight Active Navigation Item)
