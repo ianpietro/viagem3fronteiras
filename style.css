@@ -575,6 +575,21 @@ p {
   margin-top: 2px;
 }
 
+.hotel-link {
+  color: var(--primary) !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(10, 20, 35, 0.4);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hotel-link:hover {
+  color: var(--secondary-light) !important;
+  text-decoration-color: var(--secondary-light);
+}
+
 
 /* Packing Checklist */
 .packing-container {

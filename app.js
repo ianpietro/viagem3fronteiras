@@ -248,7 +248,13 @@ function renderTimeline() {
               <i class="fa-solid fa-bed footer-detail-icon"></i>
               <div class="footer-detail-text">
                 <h5>HOSPEDAGEM</h5>
-                <p>${day.hotel || 'N/A'}</p>
+                <p>${day.hotel === 'Village San Francisco' ? 
+                  `<a href="https://www.airbnb.com/l/AaVd8Dlr?s=67&unique_share_id=c0554429-ea38-4195-ba44-79a45ed9f2df" target="_blank" onclick="event.stopPropagation()" class="hotel-link">${day.hotel}</a>` : 
+                  (day.hotel === 'Hospedaje Jose Gorgues' ? 
+                    `<a href="https://secure.booking.com/confirmation.pt-br.html?label=gen173nr-10CAEoggI46AdIM1gEaCCIAQGYATO4AQfIAQ3YAQPoAQH4AQGIAgGoAgG4Aoi-ztAGwAIB0gIkNmNjMDY5NzktZWI5Zi00OGZjLThjMzAtNDRlNzcxNmQ5NzA22AIB4AIB&sid=2a6ce8a6b3d74b342a35d4c1ac426db9&aid=304142&auth_key=N01qLUfwTxGIOh8P&source=mytrips" target="_blank" onclick="event.stopPropagation()" class="hotel-link">${day.hotel}</a>` : 
+                    (day.hotel || 'N/A')
+                  )
+                }</p>
               </div>
             </div>
             <div class="footer-detail-item">
