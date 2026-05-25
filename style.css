@@ -364,6 +364,19 @@ p {
   text-decoration-color: var(--secondary);
 }
 
+.hero-weather-link {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.hero-weather-link:hover p {
+  color: var(--secondary) !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--secondary);
+}
+
 /* Timeline / Itinerary Section */
 .section-title-wrapper {
   text-align: center;
