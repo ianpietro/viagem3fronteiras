@@ -668,7 +668,9 @@ function addExpense() {
     payer,
     brlAmount,
     shares,
-    date: new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
+    date: new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }),
+    updatedAt: Date.now(),
+    deleted: false
   };
   
   expenses.push(expenseItem);
@@ -686,8 +688,10 @@ function addExpense() {
 
 // Delete expense item
 function deleteExpense(index) {
-  if (confirm(`Tem certeza que deseja excluir "${expenses[index].desc}"?`)) {
-    expenses.splice(index, 1);
+  const expenseToDelete = expenses[index];
+  if (confirm(`Tem certeza que deseja excluir "${expenseToDelete.desc}"?`)) {
+    expenseToDelete.deleted = true;
+    expenseToDelete.updatedAt = Date.now();
     localStorage.setItem("trip_expenses", JSON.stringify(expenses));
     uploadExpensesToCloud();
     recalculateSplitter();
@@ -701,6 +705,7 @@ function recalculateSplitter() {
   
   // 1. Calculate raw balances
   expenses.forEach(exp => {
+    if (exp.deleted) return; // Skip deleted items
     totalSpent += exp.brlAmount;
     
     // Payer is credited the full BRL amount
@@ -800,11 +805,14 @@ function recalculateSplitter() {
   const historyContainer = document.getElementById("splitterHistory");
   historyContainer.innerHTML = "";
   
-  if (expenses.length === 0) {
+  const activeExpenses = expenses.filter(exp => !exp.deleted);
+  
+  if (activeExpenses.length === 0) {
     historyContainer.innerHTML = `<div style="text-align: center; color: var(--text-light); padding: 30px; font-size: 0.95rem;"><i class="fa-solid fa-receipt" style="font-size: 1.8rem; margin-bottom: 8px; display: block; opacity: 0.3;"></i> Nenhum gasto registrado ainda.</div>`;
   } else {
     // Reverse to show newest on top
     [...expenses].reverse().forEach((exp, revIdx) => {
+      if (exp.deleted) return; // Skip deleted items
       const origIdx = expenses.length - 1 - revIdx;
       
       const item = document.createElement("div");
@@ -1071,9 +1079,9 @@ function startSyncPolling(binId) {
       const data = await response.json();
       const cloudExpenses = data.expenses || [];
       
-      // Compare arrays by length and IDs/hashes to check if actually changed
-      const localHash = JSON.stringify(expenses.map(e => ({ id: e.id, desc: e.desc, amt: e.brlAmount })));
-      const cloudHash = JSON.stringify(cloudExpenses.map(e => ({ id: e.id, desc: e.desc, amt: e.brlAmount })));
+      // Compare arrays by length and IDs/hashes to check if actually changed (including deleted status)
+      const localHash = JSON.stringify(expenses.map(e => ({ id: e.id, desc: e.desc, amt: e.brlAmount, deleted: e.deleted || false })));
+      const cloudHash = JSON.stringify(cloudExpenses.map(e => ({ id: e.id, desc: e.desc, amt: e.brlAmount, deleted: e.deleted || false })));
       
       if (localHash !== cloudHash) {
         expenses = mergeExpenses(expenses, cloudExpenses);
@@ -1101,18 +1109,26 @@ function stopSyncPolling() {
   }
 }
 
-// Deduplicate and merge two arrays of expenses safely
+// Deduplicate and merge two arrays of expenses safely using Last-Write-Wins (LWW) Based on Timestamps
 function mergeExpenses(local, cloud) {
   const map = new Map();
   
   local.forEach(e => {
-    if (!e.id) e.id = Date.now() + Math.random().toString(36).substring(2, 5); // Fallback for old items
+    if (!e.id) e.id = Date.now() + Math.random().toString(36).substring(2, 5);
+    e.updatedAt = e.updatedAt || Date.now();
+    e.deleted = e.deleted || false;
     map.set(e.id, e);
   });
   
   cloud.forEach(e => {
     if (!e.id) e.id = Date.now() + Math.random().toString(36).substring(2, 5);
-    map.set(e.id, e);
+    e.updatedAt = e.updatedAt || Date.now();
+    e.deleted = e.deleted || false;
+    
+    const existing = map.get(e.id);
+    if (!existing || e.updatedAt > existing.updatedAt) {
+      map.set(e.id, e);
+    }
   });
   
   return Array.from(map.values());
