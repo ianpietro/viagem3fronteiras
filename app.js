@@ -705,17 +705,17 @@ function recalculateSplitter() {
   const avgText = document.getElementById("splitterAverageSpent");
   if (totalText) totalText.textContent = `R$ ${totalSpent.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   
-  // Calculate average active adult split
-  const numAdults = 3; // Ian, Sophie, Andresa
+  // Calculate average active split (Ian & Andresa)
+  const numAdults = 2; // Ian and Andresa
   const avgAmt = totalSpent / numAdults;
-  if (avgText) avgText.textContent = `R$ ${avgAmt.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} por adulto`;
+  if (avgText) avgText.textContent = `R$ ${avgAmt.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} por pagador`;
   
   // 4. Resolve debts (Greedy Simplifier Algorithm)
   // Split participants into positive balances (creditors) and negative balances (debtors)
   let creditors = [];
   let debtors = [];
   
-  ["Ian", "Sophie", "Andresa"].forEach(person => {
+  ["Ian", "Andresa"].forEach(person => {
     const bal = parseFloat(balances[person].toFixed(2));
     if (bal > 0.01) {
       creditors.push({ name: person, balance: bal });
@@ -828,7 +828,7 @@ function shareDebtsToWhatsApp() {
   let msg = `*💸 Rachador de Contas Tríplice 2026*\\n`;
   msg += `------------------------------------\\n`;
   msg += `*Total de Gastos Comuns:* R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}\\n`;
-  msg += `*Divisão Média:* R$ ${avg.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} por adulto\\n\\n`;
+  msg += `*Divisão Média:* R$ ${avg.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} por pagador\\n\\n`;
   msg += `*💵 Resolução de Saldos (Quem deve quem):*\\n`;
   
   if (instructions.length === 0) {
