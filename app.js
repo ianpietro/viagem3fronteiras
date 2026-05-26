@@ -838,8 +838,9 @@ function deleteExpense(index) {
 function recalculateSplitter() {
   let totalSpent = 0;
   let balances = { Ian: 0, Sophie: 0, Andresa: 0, Isa: 0 };
+  let totalPaid = { Ian: 0, Andresa: 0 };
   
-  // 1. Calculate raw balances
+  // 1. Calculate raw balances and sums
   expenses.forEach(exp => {
     if (exp.deleted) return; // Skip deleted items
     
@@ -855,6 +856,10 @@ function recalculateSplitter() {
       exp.shares.forEach(person => {
         balances[person] -= shareAmt;
       });
+
+      if (totalPaid[exp.payer] !== undefined) {
+        totalPaid[exp.payer] += exp.brlAmount;
+      }
     }
   });
   
@@ -868,6 +873,11 @@ function recalculateSplitter() {
   const totalText = document.getElementById("splitterTotalSpent");
   const avgText = document.getElementById("splitterAverageSpent");
   if (totalText) totalText.textContent = `R$ ${totalSpent.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  
+  const totalPaidIanText = document.getElementById("splitterTotalPaidIan");
+  const totalPaidAndresaText = document.getElementById("splitterTotalPaidAndresa");
+  if (totalPaidIanText) totalPaidIanText.textContent = `R$ ${totalPaid.Ian.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  if (totalPaidAndresaText) totalPaidAndresaText.textContent = `R$ ${totalPaid.Andresa.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   
   // Calculate average active split (Ian & Andresa)
   const numAdults = 2; // Ian and Andresa
