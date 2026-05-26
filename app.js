@@ -706,24 +706,74 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Add a new expense item
+// Dynamic toggle between Expense and Direct Payment/Refund
+function toggleExpenseType() {
+  const isPaymentCheck = document.getElementById("expIsPayment");
+  const isPayment = isPaymentCheck ? isPaymentCheck.checked : false;
+  const lblExpPayer = document.getElementById("lblExpPayer");
+  const expDesc = document.getElementById("expDesc");
+  const receiverNote = document.getElementById("paymentReceiverNote");
+  const submitBtnText = document.getElementById("submitBtnText");
+  
+  if (isPayment) {
+    if (lblExpPayer) lblExpPayer.textContent = "Quem Enviou / Pagou?";
+    if (expDesc && (!expDesc.value || expDesc.value === "")) {
+      expDesc.value = "Acerto de Contas / Reembolso";
+    }
+    if (receiverNote) receiverNote.style.display = "block";
+    if (submitBtnText) submitBtnText.innerHTML = '<i class="fa-solid fa-handshake"></i> Registrar Acerto';
+    updateReceiverNote();
+  } else {
+    if (lblExpPayer) lblExpPayer.textContent = "Quem Pagou?";
+    if (expDesc && expDesc.value === "Acerto de Contas / Reembolso") {
+      expDesc.value = "";
+    }
+    if (receiverNote) receiverNote.style.display = "none";
+    if (submitBtnText) submitBtnText.innerHTML = '<i class="fa-solid fa-check"></i> Adicionar Despesa';
+  }
+}
+
+// Dynamically display and update payment receiver name
+function updateReceiverNote() {
+  const isPaymentCheck = document.getElementById("expIsPayment");
+  const isPayment = isPaymentCheck ? isPaymentCheck.checked : false;
+  if (!isPayment) return;
+  
+  const payer = document.getElementById("expPayer").value;
+  const receiverNameSpan = document.getElementById("receiverName");
+  
+  // Receiver is always the other adult (Ian <-> Andresa)
+  const receiver = (payer === "Ian") ? "Andresa" : "Ian";
+  if (receiverNameSpan) {
+    receiverNameSpan.textContent = receiver;
+  }
+}
+
+// Add a new expense item / Direct Payment
 function addExpense() {
   const descInput = document.getElementById("expDesc");
   const amtInput = document.getElementById("expAmount");
   const currSelect = document.getElementById("expCurrency");
   const payerSelect = document.getElementById("expPayer");
   const checkboxes = document.querySelectorAll(".exp-share-check");
+  const isPaymentCheck = document.getElementById("expIsPayment");
   
   const desc = descInput.value.trim();
   const amt = parseFloat(amtInput.value);
   const curr = currSelect.value;
   const payer = payerSelect.value;
+  const isPayment = isPaymentCheck ? isPaymentCheck.checked : false;
   
-  // Collect checked participants
-  const shares = [];
-  checkboxes.forEach(cb => {
-    if (cb.checked) shares.push(cb.value);
-  });
+  let shares = [];
+  if (isPayment) {
+    const receiver = (payer === "Ian") ? "Andresa" : "Ian";
+    shares = [receiver];
+  } else {
+    // Collect checked participants
+    checkboxes.forEach(cb => {
+      if (cb.checked) shares.push(cb.value);
+    });
+  }
   
   if (shares.length === 0) {
     alert("Por favor, selecione ao menos uma pessoa para dividir a despesa!");
@@ -749,6 +799,7 @@ function addExpense() {
     payer,
     brlAmount,
     shares,
+    isPayment,
     date: new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }),
     updatedAt: Date.now(),
     deleted: false
@@ -762,6 +813,10 @@ function addExpense() {
   descInput.value = "";
   amtInput.value = "";
   currSelect.value = "BRL";
+  if (isPaymentCheck) {
+    isPaymentCheck.checked = false;
+    toggleExpenseType();
+  }
   updateCurrencySymbol();
   
   recalculateSplitter();
@@ -787,16 +842,20 @@ function recalculateSplitter() {
   // 1. Calculate raw balances
   expenses.forEach(exp => {
     if (exp.deleted) return; // Skip deleted items
-    totalSpent += exp.brlAmount;
     
-    // Payer is credited the full BRL amount
-    balances[exp.payer] += exp.brlAmount;
-    
-    // Each participant is debited their corresponding share
-    const shareAmt = exp.brlAmount / exp.shares.length;
-    exp.shares.forEach(person => {
-      balances[person] -= shareAmt;
-    });
+    if (exp.isPayment) {
+      // Direct Payment/Refund (Settle Up): does not increase common total spent!
+      balances[exp.payer] += exp.brlAmount;
+      balances[exp.shares[0]] -= exp.brlAmount;
+    } else {
+      totalSpent += exp.brlAmount;
+      balances[exp.payer] += exp.brlAmount;
+      
+      const shareAmt = exp.brlAmount / exp.shares.length;
+      exp.shares.forEach(person => {
+        balances[person] -= shareAmt;
+      });
+    }
   });
   
   // 2. Intelligent Family Consolidation:
@@ -896,8 +955,12 @@ function recalculateSplitter() {
       if (exp.deleted) return; // Skip deleted items
       const origIdx = expenses.length - 1 - revIdx;
       
+      const isPay = exp.isPayment || false;
+      const borderLeft = isPay ? "border-left: 4px solid #34c759;" : "";
+      const bg = isPay ? "background: rgba(52, 199, 89, 0.03);" : "background: rgba(0,0,0,0.02);";
+      
       const item = document.createElement("div");
-      item.style.cssText = "display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.02); padding: 12px; border-radius: var(--border-radius-sm); border: 1px solid rgba(0,0,0,0.04); transition: var(--transition-fast);";
+      item.style.cssText = `display: flex; justify-content: space-between; align-items: center; ${bg} padding: 12px; border-radius: var(--border-radius-sm); border: 1px solid rgba(0,0,0,0.04); ${borderLeft} transition: var(--transition-fast);`;
       
       let currencyStr = "";
       if (exp.currency && exp.currency !== "BRL" && exp.originalAmount !== undefined) {
@@ -905,17 +968,34 @@ function recalculateSplitter() {
         currencyStr = `<span style="font-size: 0.78rem; color: var(--text-light); display: block;">Original: ${symbol}${exp.originalAmount.toLocaleString('pt-BR')} ${exp.currency}</span>`;
       }
       
+      let badgeStr = "";
+      if (isPay) {
+        badgeStr = `
+          <span class="badge" style="background: rgba(52, 199, 89, 0.15); color: #34c759; border: 1px solid rgba(52, 199, 89, 0.25); font-size: 0.72rem; padding: 1px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 4px; font-weight: 600;">
+            <i class="fa-solid fa-handshake"></i> Acerto / Reembolso
+          </span>
+        `;
+      }
+      
+      let subtitleStr = "";
+      if (isPay) {
+        subtitleStr = `<strong>${exp.payer}</strong> pagou / transferiu para <strong>${exp.shares[0]}</strong> (${exp.date})`;
+      } else {
+        subtitleStr = `Pago por <strong>${exp.payer}</strong> para <strong>${exp.shares.join(', ')}</strong> (${exp.date})`;
+      }
+      
       item.innerHTML = `
         <div style="flex-grow: 1; min-width: 0;">
+          ${badgeStr}
           <h5 style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${exp.desc}</h5>
           <span style="font-size: 0.78rem; color: var(--text-light); display: block; margin-top: 2px;">
-            Pago por <strong>${exp.payer}</strong> para <strong>${exp.shares.join(', ')}</strong> (${exp.date})
+            ${subtitleStr}
           </span>
           ${currencyStr}
         </div>
         <div style="display: flex; align-items: center; gap: 16px; flex-shrink: 0; margin-left: 12px;">
           <div style="text-align: right;">
-            <span style="font-size: 1rem; font-weight: 700; color: var(--primary); font-family: var(--font-sans);">
+            <span style="font-size: 1rem; font-weight: 700; color: ${isPay ? '#34c759' : 'var(--primary)'}; font-family: var(--font-sans);">
               R$ ${exp.brlAmount.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           </div>

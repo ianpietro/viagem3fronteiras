@@ -17,7 +17,7 @@
   <link rel="apple-touch-icon" href="assets/icon.svg">
 
   <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=35">
+  <link rel="stylesheet" href="style.css?v=36">
   
   <!-- FontAwesome Icons for absolute design quality -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -702,12 +702,26 @@
       <!-- Add Expense Form Card -->
       <div class="glass-panel" style="padding: 24px; border-radius: var(--border-radius-lg); background: var(--card-bg); border: 1px solid var(--card-border);">
         <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-          <i class="fa-solid fa-circle-plus" style="color: var(--secondary);"></i> Adicionar Despesa
+          <i class="fa-solid fa-circle-plus" style="color: var(--secondary);"></i> Adicionar Despesa / Acerto
         </h3>
         
         <form id="splitterForm" onsubmit="event.preventDefault(); addExpense();">
+          <!-- Acerto de Contas Toggle Switch -->
+          <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0, 0, 0, 0.02); padding: 12px 16px; border-radius: var(--border-radius-sm); border: 1px solid rgba(0, 0, 0, 0.05); margin-bottom: 20px;">
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark); display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-handshake" style="color: #34c759;"></i> Registrar como Acerto / Reembolso
+              </span>
+              <span style="font-size: 0.78rem; color: var(--text-light);">Registra o pagamento de uma pessoa para a outra</span>
+            </div>
+            <label class="switch-toggle">
+              <input type="checkbox" id="expIsPayment" onchange="toggleExpenseType()">
+              <span class="slider"></span>
+            </label>
+          </div>
+
           <div style="margin-bottom: 16px;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-light); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Descrição</label>
+            <label id="lblExpDesc" style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-light); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Descrição</label>
             <input type="text" id="expDesc" placeholder="Ex: Almoço no Barracão, Táxi Puerto" required style="width: 100%; padding: 12px; border-radius: var(--border-radius-sm); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9); font-family: var(--font-sans); font-size: 0.95rem; color: var(--text-dark);">
           </div>
           
@@ -736,11 +750,15 @@
           </div>
 
           <div style="margin-bottom: 16px;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-light); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Quem Pagou?</label>
-            <select id="expPayer" style="width: 100%; padding: 12px; border-radius: var(--border-radius-sm); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9); font-family: var(--font-sans); font-size: 0.95rem; color: var(--text-dark);">
+            <label id="lblExpPayer" style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-light); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Quem Pagou?</label>
+            <select id="expPayer" onchange="updateReceiverNote()" style="width: 100%; padding: 12px; border-radius: var(--border-radius-sm); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9); font-family: var(--font-sans); font-size: 0.95rem; color: var(--text-dark);">
               <option value="Ian">Ian</option>
               <option value="Andresa">Andresa</option>
             </select>
+            <!-- Receiver badge for Direct Payments/Refunds -->
+            <div id="paymentReceiverNote" style="display: none; font-size: 0.82rem; color: var(--text-light); margin-top: 8px; font-weight: 500; background: rgba(52, 199, 89, 0.08); border: 1px solid rgba(52, 199, 89, 0.2); padding: 8px 12px; border-radius: var(--border-radius-sm);">
+              <i class="fa-solid fa-arrow-right" style="color: #34c759; margin-right: 4px;"></i> Destinatário do acerto: <strong id="receiverName" style="color: var(--text-dark);">Andresa</strong>
+            </div>
           </div>
 
           <div style="display: none; margin-bottom: 24px;">
@@ -756,7 +774,7 @@
           </div>
           
           <button type="submit" style="width: 100%; padding: 14px; border: none; border-radius: var(--border-radius-sm); background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%); color: var(--text-white); font-family: var(--font-sans); font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.15); transition: all 0.3s ease;">
-            <i class="fa-solid fa-check"></i> Adicionar Despesa
+            <span id="submitBtnText"><i class="fa-solid fa-check"></i> Adicionar Despesa</span>
           </button>
         </form>
       </div>
@@ -846,6 +864,6 @@
   </script>
 
   <!-- Javascript Logic -->
-  <script src="app.js?v=35"></script>
+  <script src="app.js?v=36"></script>
 </body>
 </html>
