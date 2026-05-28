@@ -908,6 +908,12 @@ p {
   pointer-events: auto;
 }
 
+.bottom-nav.nav-hidden {
+  transform: translate(-50%, 120px) !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .bottom-nav-item {
   display: flex;
   flex-direction: column;

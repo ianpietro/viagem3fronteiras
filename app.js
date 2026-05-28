@@ -505,6 +505,8 @@ function setupBottomNav() {
 }
 
 // 13. PWA ScrollSpy (Highlight Active Navigation Item)
+let lastScrollY = window.scrollY;
+
 function setupScrollSpy() {
   const sections = [
     document.getElementById("itinerary"),
@@ -513,8 +515,35 @@ function setupScrollSpy() {
     document.getElementById("gallery")
   ];
   const navItems = document.querySelectorAll(".bottom-nav-item");
+  const bottomNav = document.getElementById("bottomNav");
   
   window.addEventListener("scroll", () => {
+    const currentScrollY = window.scrollY;
+    
+    // G1-style Scroll Reactive Visibility Logic
+    if (currentScrollY > 100) {
+      if (Math.abs(currentScrollY - lastScrollY) >= 8) {
+        if (currentScrollY > lastScrollY) {
+          // Scroll DOWN -> SHOW bottom navigation!
+          if (bottomNav) bottomNav.classList.remove("nav-hidden");
+        } else {
+          // Scroll UP -> HIDE bottom navigation!
+          if (bottomNav) bottomNav.classList.add("nav-hidden");
+        }
+      }
+    } else {
+      // Near the top of the page, keep it visible!
+      if (bottomNav) bottomNav.classList.remove("nav-hidden");
+    }
+    
+    // Always show when we are at the very bottom of the page
+    if ((window.innerHeight + currentScrollY) >= document.body.offsetHeight - 50) {
+      if (bottomNav) bottomNav.classList.remove("nav-hidden");
+    }
+    
+    lastScrollY = currentScrollY;
+
+    // Regular ScrollSpy Tab Checking
     // Guard: If splitter or packing tab is active, do not run scrollspy for main itinerary sections
     const splitterView = document.getElementById("splitter-view");
     const packingView = document.getElementById("packing-view");
@@ -524,7 +553,7 @@ function setupScrollSpy() {
     }
     
     let current = "";
-    const scrollPosition = window.scrollY + 250; // offset for highlighting slightly before top
+    const scrollPosition = currentScrollY + 250; // offset for highlighting slightly before top
     
     sections.forEach((section) => {
       if (!section) return;
@@ -536,7 +565,7 @@ function setupScrollSpy() {
     });
     
     // Extra checks for bottom of page
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+    if ((window.innerHeight + currentScrollY) >= document.body.offsetHeight - 100) {
       current = "gallery"; // Gallery is at the very bottom
     }
     
