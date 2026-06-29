@@ -10,72 +10,69 @@ const defaultItinerary = [
     date: "Terça-feira, 30 de Junho",
     hotel: "Village San Francisco",
     restaurant: '<a href="#" onclick="openFoodieModal(\'bona\'); event.stopPropagation(); return false;" class="foodie-link">Bona Trattoria</a> ou Quinta da Oliva',
-    transport: "Carro Alugado (Retirada às 19:30 no aeroporto)",
+    transport: "Uber / Táxi (Deslocamento do Aeroporto)",
     weatherIcon: "fa-sun",
     weatherTemp: "24° / 14°C",
     activities: [
       { time: "15:30", title: "Pouso da Sophie em Foz", desc: "Pouso da Sophie em Foz (IGU) vinda do Rio (GIG). Ela pega um Uber direto para o Village San Francisco para fazer o check-in e receber as chaves com o anfitrião Sergio." },
-      { time: "18:55", title: "Pouso de Ian, Andresa e Isa", desc: "Pouso do voo vindo de Belém (conexão em GRU)." },
-      { time: "19:30", title: "Retirada do Carro Alugado", desc: "Retirada do carro alugado no terminal do aeroporto, acomodação das malas no porta-malas e deslocamento até a região norte da cidade." },
-      { time: "20:15", title: "Reunião do Grupo Completo", desc: "Chegada ao condomínio Village San Francisco e reunião de todo o grupo." },
-      { time: "Noite", title: "Jantar de Boas-Vindas", desc: "Jantar na Bona Trattoria ou na Quinta da Oliva (via Av. República Argentina), a menos de 10 minutos de carro da hospedagem." }
+      { time: "18:55", title: "Pouso de Ian, Andresa e Isa", desc: "Pouso do voo vindo de Belém (conexão em GRU). Eles pegam um Uber/Táxi direto para o condomínio Village San Francisco." },
+      { time: "20:15", title: "Reunião do Grupo Completo", desc: "Chegada de Ian, Andresa e Isa ao condomínio e reunião com Sophie." },
+      { time: "Noite", title: "Jantar de Boas-Vindas", desc: "Jantar na Bona Trattoria ou na Quinta da Oliva (via Av. República Argentina), a menos de 10 minutos de Uber/Táxi da hospedagem." }
     ]
   },
   {
     dayNum: 2,
-    dayTitle: "Itaipu, Circuitos Culturais e Pôr do Sol no Marco",
+    dayTitle: "Paraguai Dia 1 (Compras Livres)",
     date: "Quarta-feira, 01 de Julho",
     hotel: "Village San Francisco",
-    restaurant: '<a href="#" onclick="openFoodieModal(\'barracao\'); event.stopPropagation(); return false;" class="foodie-link">Restaurante Barracão</a> & <a href="#" onclick="openFoodieModal(\'cabeza\'); event.stopPropagation(); return false;" class="foodie-link">Cabeza de Vaca</a>',
-    transport: "Carro Alugado (Dia Inteiro)",
-    weatherIcon: "fa-cloud-sun",
-    weatherTemp: "24° / 13°C",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'sax\'); event.stopPropagation(); return false;" class="foodie-link">SAX Palace</a> ou <a href="#" onclick="openFoodieModal(\'santelmo\'); event.stopPropagation(); return false;" class="foodie-link">San Telmo</a> (Paraguai) & <a href="#" onclick="openFoodieModal(\'bella\'); event.stopPropagation(); return false;" class="foodie-link">Noite Italiana (Bella Italia)</a>',
+    transport: "Uber / Ônibus Local / Táxi (decidido na hora conforme o trânsito)",
+    weatherIcon: "fa-cloud-showers-heavy",
+    weatherTemp: "20° / 12°C",
     activities: [
-      { time: "09:15", title: "Saída do Condomínio", desc: "Saída de carro em direção à Usina de Itaipu." },
-      { time: "09:30", title: "Itaipu Panorâmica (Tour Normal)", desc: "Deixar o carro no estacionamento oficial do Centro de Visitantes. Visita panorâmica da grandiosa usina, excelente para todas as idades, com paradas nos mirantes para fotos incríveis da barragem (09:30 às 11:30)." },
-      { time: "12:15", title: "Almoço no Restaurante Barracão", desc: "Almoço delicioso de comida caseira (buffet no fogão a lenha), localizado na descida da usina." },
-      { time: "14:00", title: "Templo Budista Chen Tien", desc: "Visita contemplativa ao Templo Budista na região norte (14:00 às 15:15)." },
-      { time: "15:40", title: "Mesquita Omar Ibn Al-Khattab", desc: "Parada na Mesquita na região central (15:40 às 16:30). Ombros e pernas cobertos; lenço fornecido para as mulheres na entrada." },
-      { time: "17:00", title: "Pôr do Sol no Marco das Três Fronteiras", desc: "Chegada ao Marco (Lado BR). Momento para pegar lugar para o pôr do sol de inverno no encontro dos rios Iguaçu e Paraná." },
-      { time: "19:30", title: "Show Cultural & Jantar", desc: "Apresentação ao vivo de danças típicas ao ar livre. Jantar no restaurante Cabeza de Vaca (dentro do complexo) ou retorno para o centro." }
+      { time: "06:00", title: "Saída Rumo ao Paraguai", desc: "Saída do Village San Francisco rumo a Ciudad del Este. Deslocamento bem cedo em direção à Ponte da Amizade (de táxi local ou transfer) para cruzar antes de formar qualquer trânsito." },
+      { time: "07:00", title: "Compras Livres pelas Grandes Lojas", desc: "Primeiro round de compras totalmente livre pelas grandes lojas âncoras (Cellshop, Shopping China, Monalisa, Shopping Terra Nova) à medida que abrem suas portas. Como vai estar chovendo, o foco ideal é ficar dentro dos shoppings cobertos (Cellshop, Shopping Paris, Shopping Del Este, Monalisa). (07:00 às 12:30)" },
+      { time: "12:30", title: "Pausa para o Almoço (Escolhas Reais)", desc: "Pausa para refeição (12:30 às 14:00). Escolham na hora de acordo com o ritmo das compras:<br><br>• <strong><a href=\"#\" onclick=\"openFoodieModal('santelmo'); event.stopPropagation(); return false;\" class=\"foodie-link\">San Telmo</a></strong>: Resto-café moderno no microcentro, próximo a Cellshop e Nissei. Preço excelente, ótimas empanadas, croissants recheados e pratos executivos práticos com cartão de consumo individual.<br>• <strong>SAX Palace</strong>: Sofisticado, ar-condicionado forte, pratos premium e vista panorâmica incrível para a ponte e o Rio Paraná.<br>• <strong>Restaurante Shopping China (3º piso Shopping Paris)</strong>: Praça de alimentação gigante de alto padrão, ideal para comer bem sem sair do prédio.<br>• <strong>Baviera</strong>: Carnes grelhadas e culinária alemã tradicional, porções fartas e ambiente seguro.<br>• <strong>Café Monalisa</strong>: Executivos leves, cafés e salgados gourmet rápidos dentro da própria loja.<br>• <strong>Shopping Del Este</strong>: Ao lado da aduana paraguaia, conveniência pura com grelhados rápidos." },
+      { time: "14:00", title: "Repescagem e Retorno", desc: "Breve repescagem de lojas e retorno a Foz (a pé cruzando a ponte ou pegando um táxi local). Parada obrigatória na hospedagem para guardar sacolas com segurança." },
+      { time: "Noite", title: "Noite Italiana no Hotel Bella Italia", desc: "Jantar especial na famosa Noite Italiana (famoso rodízio de queijos gigantesco e massas artesanais)." }
     ]
   },
   {
     dayNum: 3,
-    dayTitle: "Cataratas, Almoço no Parque, Aves e Devolução do Carro",
+    dayTitle: "Cataratas Brasileiras, Almoço no Parque e Parque das Aves",
     date: "Quinta-feira, 02 de Julho",
     hotel: "Village San Francisco",
     restaurant: '<a href="#" onclick="openFoodieModal(\'bistro\'); event.stopPropagation(); return false;" class="foodie-link">Bistrô da Mata</a>',
-    transport: "Carro Alugado (Devolução às 19:00) + Uber/Táxi",
+    transport: "Uber / Táxi (Dia Inteiro)",
     weatherIcon: "fa-cloud-showers-heavy",
     weatherTemp: "23° / 10°C",
     activities: [
-      { time: "08:15", title: "Saída do Condomínio", desc: "Saída de carro cruzando a cidade em direção ao extremo sul. As malas ficam guardadas no Village San Francisco." },
-      { time: "08:45", title: "Cataratas Brasileiras", desc: "Parque Nacional do Iguaçu. Carro no estacionamento oficial. Trilha panorâmica e passarela da Garganta do Diabo (08:45 às 11:45)." },
+      { time: "08:15", title: "Saída do Condomínio", desc: "Saída de Uber/Táxi cruzando a cidade em direção ao extremo sul. As malas ficam guardadas no Village San Francisco." },
+      { time: "08:45", title: "Cataratas Brasileiras", desc: "Parque Nacional do Iguaçu. Trilha panorâmica e passarela da Garganta do Diabo (08:45 às 11:45)." },
       { time: "11:45", title: "Travessia para o Parque das Aves", desc: "Deslocamento a pé (3 minutos) cruzando a rua até o Parque das Aves." },
       { time: "12:00", title: "Almoço no Bistrô da Mata", desc: "Almoço no restaurante localizado logo na entrada do Parque das Aves (12:00 às 13:00)." },
       { time: "13:00", title: "Circuito do Parque das Aves", desc: "Visita imersiva ao circuito de viveiros gigantes do Parque das Aves (13:00 às 15:30)." },
-      { time: "15:30", title: "Retorno e Descanso", desc: "Retorno de carro ao Village San Francisco para banho, descanso e troca de roupa para o frio da noite (15:30 às 18:00)." },
-      { time: "18:30", title: "Saída rumo ao Aeroporto", desc: "Deslocamento para a devolução do veículo." },
-      { time: "19:00", title: "Devolução do Carro Alugado", desc: "Devolução do carro alugado diretamente no balcão do terminal do aeroporto." },
-      { time: "19:30", title: "Retorno de Uber / Táxi", desc: "Retorno do grupo para o condomínio Village San Francisco." }
+      { time: "15:30", title: "Retorno de Uber/Táxi e Descanso", desc: "Retorno ao Village San Francisco para banho, descanso e troca de roupa para o frio da noite (15:30 às 18:00)." },
+      { time: "Noite", title: "Noite de Descanso ou Jantar Livre", desc: "Noite livre para descansar no Village San Francisco ou pedir um delivery/ir a um restaurante local de Uber." }
     ]
   },
   {
     dayNum: 4,
-    dayTitle: "Paraguai Dia 1 (Compras Livres)",
+    dayTitle: "Itaipu, Circuitos Culturais e Pôr do Sol no Marco",
     date: "Sexta-feira, 03 de Julho",
     hotel: "Village San Francisco",
-    restaurant: '<a href="#" onclick="openFoodieModal(\'sax\'); event.stopPropagation(); return false;" class="foodie-link">SAX Palace</a> ou <a href="#" onclick="openFoodieModal(\'santelmo\'); event.stopPropagation(); return false;" class="foodie-link">San Telmo</a> (Paraguai) & <a href="#" onclick="openFoodieModal(\'bella\'); event.stopPropagation(); return false;" class="foodie-link">Noite Italiana (Bella Italia)</a>',
-    transport: "A pé / Ônibus Local / Táxi (decidido na hora conforme o trânsito)",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'barracao\'); event.stopPropagation(); return false;" class="foodie-link">Restaurante Barracão</a> & <a href="#" onclick="openFoodieModal(\'cabeza\'); event.stopPropagation(); return false;" class="foodie-link">Cabeza de Vaca</a>',
+    transport: "Uber / Táxi (Dia Inteiro)",
     weatherIcon: "fa-cloud-sun",
     weatherTemp: "19° / 8°C",
     activities: [
-      { time: "06:00", title: "Saída Rumo ao Paraguai", desc: "Saída do Village San Francisco rumo a Ciudad del Este. Deslocamento bem cedo em direção à Ponte da Amizade para cruzar antes de formar qualquer trânsito." },
-      { time: "07:00", title: "Compras Livres pelas Grandes Lojas", desc: "Primeiro round de compras totalmente livre pelas grandes lojas âncoras (Cellshop, Shopping China, Monalisa, Shopping Terra Nova) à medida que abrem suas portas. Sem pressa e focado no que der vontade! (07:00 às 12:30)" },
-      { time: "12:30", title: "Pausa para o Almoço (Escolhas Reais)", desc: "Pausa para refeição (12:30 às 14:00). Escolham na hora de acordo com o ritmo das compras:<br><br>• <strong><a href=\"#\" onclick=\"openFoodieModal('santelmo'); event.stopPropagation(); return false;\" class=\"foodie-link\">San Telmo</a></strong>: Resto-café moderno no microcentro, próximo a Cellshop e Nissei. Preço excelente, ótimas empanadas, croissants recheados e pratos executivos práticos com cartão de consumo individual.<br>• <strong>SAX Palace</strong>: Sofisticado, ar-condicionado forte, pratos premium e vista panorâmica incrível para a ponte e o Rio Paraná.<br>• <strong>Restaurante Shopping China (3º piso Shopping Paris)</strong>: Praça de alimentação gigante de alto padrão, ideal para comer bem sem sair do prédio.<br>• <strong>Baviera</strong>: Carnes grelhadas e culinária alemã tradicional, porções fartas e ambiente seguro.<br>• <strong>Café Monalisa</strong>: Executivos leves, cafés e salgados gourmet rápidos dentro da própria loja.<br>• <strong>Shopping Del Este</strong>: Ao lado da aduana paraguaia, conveniência pura com grelhados rápidos." },
-      { time: "14:00", title: "Repescagem e Retorno", desc: "Breve repescagem de lojas e retorno a Foz (a pé cruzando a ponte ou pegando um táxi local, dependendo do trânsito na aduana). Parada obrigatória na hospedagem para guardar sacolas com segurança." },
-      { time: "Noite", title: "Noite Italiana no Hotel Bella Italia", desc: "Jantar especial na famosa Noite Italiana (famoso rodízio de queijos gigantesco e massas artesanais)." }
+      { time: "09:15", title: "Saída do Condomínio", desc: "Saída de Uber/Táxi em direção à Usina de Itaipu." },
+      { time: "09:30", title: "Itaipu Panorâmica (Tour Normal)", desc: "Visita panorâmica da grandiosa usina, excelente para todas as idades, com paradas nos mirantes para fotos incríveis da barragem (09:30 às 11:30)." },
+      { time: "12:15", title: "Almoço no Restaurante Barracão", desc: "Almoço delicioso de comida caseira (buffet no fogão a lenha), localizado na descida da usina." },
+      { time: "14:00", title: "Templo Budista Chen Tien", desc: "Visita contemplativa ao Templo Budista na região norte (14:00 às 15:15)." },
+      { time: "15:40", title: "Mesquita Omar Ibn Al-Khattab", desc: "Parada na Mesquita na região central (15:40 às 16:30). Ombros e pernas cobertos; lenço fornecido para as mulheres na entrada." },
+      { time: "17:00", title: "Pôr do Sol no Marco das Três Fronteiras", desc: "Chegada de Uber/Táxi ao Marco (Lado BR). Momento para pegar lugar para o pôr do sol de inverno no encontro dos rios Iguaçu e Paraná." },
+      { time: "19:30", title: "Show Cultural & Jantar", desc: "Apresentação ao vivo de danças típicas ao ar livre. Jantar no restaurante Cabeza de Vaca (dentro do complexo) e retorno de Uber para o Village San Francisco." }
     ]
   },
   {
@@ -234,9 +231,9 @@ function renderTimeline() {
     // Create Google Maps redirect buttons for all 9 days
     const googleMapsRoutes = {
       1: "https://www.google.com/maps/dir/?api=1&origin=Aeroporto+Internacional+de+Foz+do+Iguacu&destination=Bona+Trattoria,+Foz+do+Iguacu&waypoints=Condominio+Village+San+Francisco,+Foz+do+Iguacu&travelmode=driving",
-      2: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Condominio+Village+San+Francisco,+Foz+do+Iguacu&waypoints=Usina+de+Itaipu,+Foz+do+Iguacu%7CTemplo+Budista+Chen+Tien,+Foz+do+Iguacu%7CMarco+das+Tres+Fronteiras,+Foz+do+Iguacu&travelmode=driving",
-      3: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Condominio+Village+San+Francisco,+Foz+do+Iguacu&waypoints=Parque+Nacional+do+Iguacu,+Foz+do+Iguacu%7CParque+das+Aves,+Foz+do+Iguacu%7CAeroporto+Internacional+de+Foz+do+Iguacu&travelmode=driving",
-      4: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Hotel+Bella+Italia,+Foz+do+Iguacu&waypoints=Aduana+Paraguai%7CShopping+China+Importados,+Ciudad+del+Este&travelmode=driving",
+      2: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Hotel+Bella+Italia,+Foz+do+Iguacu&waypoints=Aduana+Paraguai%7CShopping+China+Importados,+Ciudad+del+Este&travelmode=driving",
+      3: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Condominio+Village+San+Francisco,+Foz+do+Iguacu&waypoints=Parque+Nacional+do+Iguacu,+Foz+do+Iguacu%7CParque+das+Aves,+Foz+do+Iguacu&travelmode=driving",
+      4: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Condominio+Village+San+Francisco,+Foz+do+Iguacu&waypoints=Usina+de+Itaipu,+Foz+do+Iguacu%7CTemplo+Budista+Chen+Tien,+Foz+do+Iguacu%7CMarco+das+Tres+Fronteiras,+Foz+do+Iguacu&travelmode=driving",
       5: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Capitao+Bar,+Foz+do+Iguacu&waypoints=Cellshop+Importados,+Ciudad+del+Este&travelmode=driving",
       6: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=La+Feirinha,+Puerto+Iguazu&waypoints=Duty+Free+Shop+Puerto+Iguazu%7CHospedaje+Jose+Gorgues,+Puerto+Iguazu&travelmode=driving",
       7: "https://www.google.com/maps/dir/?api=1&origin=Hospedaje+Jose+Gorgues,+Puerto+Iguazu&destination=El+Quincho+del+Tio+Querido,+Puerto+Iguazu&waypoints=Parque+Nacional+Iguazu,+Puerto+Iguazu&travelmode=driving",
