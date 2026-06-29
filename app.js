@@ -39,21 +39,19 @@ const defaultItinerary = [
   },
   {
     dayNum: 3,
-    dayTitle: "Cataratas Brasileiras, Almoço no Parque e Parque das Aves",
+    dayTitle: "Paraguai Dia 2 (Compras Livres) & Noite de Barzinhos",
     date: "Quinta-feira, 02 de Julho",
     hotel: "Village San Francisco",
-    restaurant: '<a href="#" onclick="openFoodieModal(\'bistro\'); event.stopPropagation(); return false;" class="foodie-link">Bistrô da Mata</a>',
-    transport: "Uber / Táxi (Dia Inteiro)",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'santelmo\'); event.stopPropagation(); return false;" class="foodie-link">San Telmo</a> (Paraguai) & <a href="#" onclick="openFoodieModal(\'bares\'); event.stopPropagation(); return false;" class="foodie-link">Bares da Av. Jorge Schimmelpfeng</a>',
+    transport: "A pé / Ônibus Local / Táxi (a decidir na hora conforme o trânsito)",
     weatherIcon: "fa-cloud-showers-heavy",
     weatherTemp: "23° / 10°C",
     activities: [
-      { time: "08:15", title: "Saída do Condomínio", desc: "Saída de Uber/Táxi cruzando a cidade em direção ao extremo sul. As malas ficam guardadas no Village San Francisco." },
-      { time: "08:45", title: "Cataratas Brasileiras", desc: "Parque Nacional do Iguaçu. Trilha panorâmica e passarela da Garganta do Diabo (08:45 às 11:45)." },
-      { time: "11:45", title: "Travessia para o Parque das Aves", desc: "Deslocamento a pé (3 minutos) cruzando a rua até o Parque das Aves." },
-      { time: "12:00", title: "Almoço no Bistrô da Mata", desc: "Almoço no restaurante localizado logo na entrada do Parque das Aves (12:00 às 13:00)." },
-      { time: "13:00", title: "Circuito do Parque das Aves", desc: "Visita imersiva ao circuito de viveiros gigantes do Parque das Aves (13:00 às 15:30)." },
-      { time: "15:30", title: "Retorno de Uber/Táxi e Descanso", desc: "Retorno ao Village San Francisco para banho, descanso e troca de roupa para o frio da noite (15:30 às 18:00)." },
-      { time: "Noite", title: "Noite de Descanso ou Jantar Livre", desc: "Noite livre para descansar no Village San Francisco ou pedir um delivery/ir a um restaurante local de Uber." }
+      { time: "07:30", title: "Saída Cedo do Condomínio", desc: "Saída em direção à ponte (a pé ou de ônibus). Como o comércio no Paraguai fecha mais cedo de tarde, manter a saída cedo é fundamental." },
+      { time: "08:00", title: "Segundo Bloco de Compras Livres", desc: "Tempo precioso para pesquisar preços pendentes, voltar às lojas preferidas ou garantir itens que faltaram no dia anterior. Como pode chuviscar, os shoppings cobertos continuam sendo o melhor porto seguro! (08:00 às 13:00)." },
+      { time: "13:00", title: "Pausa para o Almoço", desc: "Almoço livre (13:00 às 14:15). Recomenda-se focar no agradável <a href=\"#\" onclick=\"openFoodieModal('santelmo'); event.stopPropagation(); return false;\" class=\"foodie-link\">San Telmo</a> (microcentro) ou nas praças de alimentação do Shopping China / Shopping Del Este." },
+      { time: "14:30", title: "Retorno Definitivo ao Brasil", desc: "Retorno definitivo ao Brasil (a pé ou de táxi) para escapar do gargalo de trânsito da ponte no fechamento do comércio." },
+      { time: "Noite", title: "Bares na Jorge Schimmelpfeng", desc: "Jantar e drinks nos bares animados e centrais da principal avenida gastronômica de Foz (como o Capitão Bar ou Rafain Chopp)." }
     ]
   },
   {
@@ -77,19 +75,21 @@ const defaultItinerary = [
   },
   {
     dayNum: 5,
-    dayTitle: "Paraguai Dia 2 (Compras Livres) & Noite de Barzinhos",
+    dayTitle: "Cataratas Brasileiras, Almoço no Parque e Parque das Aves",
     date: "Sábado, 04 de Julho",
     hotel: "Village San Francisco",
-    restaurant: '<a href="#" onclick="openFoodieModal(\'santelmo\'); event.stopPropagation(); return false;" class="foodie-link">San Telmo</a> (Paraguai) & <a href="#" onclick="openFoodieModal(\'bares\'); event.stopPropagation(); return false;" class="foodie-link">Bares da Av. Jorge Schimmelpfeng</a>',
-    transport: "A pé / Ônibus Local / Táxi (a decidir na hora)",
+    restaurant: '<a href="#" onclick="openFoodieModal(\'bistro\'); event.stopPropagation(); return false;" class="foodie-link">Bistrô da Mata</a>',
+    transport: "Uber / Táxi (Dia Inteiro)",
     weatherIcon: "fa-sun",
     weatherTemp: "19° / 8°C",
     activities: [
-      { time: "07:30", title: "Saída Cedo do Condomínio", desc: "Saída em direção à ponte (a pé ou de ônibus). Como o comércio no Paraguai fecha mais cedo aos sábados (por volta das 15:00), manter a saída cedo é fundamental." },
-      { time: "08:00", title: "Segundo Bloco de Compras Livres", desc: "Tempo precioso para pesquisar preços pendentes, voltar às lojas preferidas ou garantir itens que faltaram no dia anterior (08:00 às 13:00)." },
-      { time: "13:00", title: "Pausa para o Almoço", desc: "Almoço livre (13:00 às 14:15). Recomenda-se focar no agradável <a href=\"#\" onclick=\"openFoodieModal('santelmo'); event.stopPropagation(); return false;\" class=\"foodie-link\">San Telmo</a> (microcentro) ou nas praças de alimentação do Shopping China / Shopping Del Este." },
-      { time: "14:30", title: "Retorno Definitivo ao Brasil", desc: "Retorno definitivo ao Brasil (a pé ou de táxi) para escapar do gargalo de trânsito da ponte no fechamento massivo do comércio." },
-      { time: "Noite", title: "Bares na Jorge Schimmelpfeng", desc: "Jantar e drinks nos bares animados e centrais da principal avenida gastronômica de Foz (como o Capitão Bar ou Rafain Chopp)." }
+      { time: "08:15", title: "Saída do Condomínio", desc: "Saída de Uber/Táxi cruzando a cidade em direção ao extremo sul. As malas ficam guardadas no Village San Francisco." },
+      { time: "08:45", title: "Cataratas Brasileiras", desc: "Parque Nacional do Iguaçu. Trilha panorâmica e passarela da Garganta do Diabo (08:45 às 11:45)." },
+      { time: "11:45", title: "Travessia para o Parque das Aves", desc: "Deslocamento a pé (3 minutos) cruzando a rua até o Parque das Aves." },
+      { time: "12:00", title: "Almoço no Bistrô da Mata", desc: "Almoço no restaurante localizado logo na entrada do Parque das Aves (12:00 às 13:00)." },
+      { time: "13:00", title: "Circuito do Parque das Aves", desc: "Visita imersiva ao circuito de viveiros giants do Parque das Aves (13:00 às 15:30)." },
+      { time: "15:30", title: "Retorno de Uber/Táxi e Descanso", desc: "Retorno ao Village San Francisco para banho, descanso e troca de roupa para o frio da noite (15:30 às 18:00)." },
+      { time: "Noite", title: "Noite de Descanso ou Jantar Livre", desc: "Noite livre para descansar no Village San Francisco ou pedir um delivery/ir a um restaurante local de Uber." }
     ]
   },
   {
@@ -232,9 +232,9 @@ function renderTimeline() {
     const googleMapsRoutes = {
       1: "https://www.google.com/maps/dir/?api=1&origin=Aeroporto+Internacional+de+Foz+do+Iguacu&destination=Bona+Trattoria,+Foz+do+Iguacu&waypoints=Condominio+Village+San+Francisco,+Foz+do+Iguacu&travelmode=driving",
       2: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Hotel+Bella+Italia,+Foz+do+Iguacu&waypoints=Aduana+Paraguai%7CShopping+China+Importados,+Ciudad+del+Este&travelmode=driving",
-      3: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Condominio+Village+San+Francisco,+Foz+do+Iguacu&waypoints=Parque+Nacional+do+Iguacu,+Foz+do+Iguacu%7CParque+das+Aves,+Foz+do+Iguacu&travelmode=driving",
+      3: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Capitao+Bar,+Foz+do+Iguacu&waypoints=Cellshop+Importados,+Ciudad+del+Este&travelmode=driving",
       4: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Condominio+Village+San+Francisco,+Foz+do+Iguacu&waypoints=Usina+de+Itaipu,+Foz+do+Iguacu%7CTemplo+Budista+Chen+Tien,+Foz+do+Iguacu%7CMarco+das+Tres+Fronteiras,+Foz+do+Iguacu&travelmode=driving",
-      5: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Capitao+Bar,+Foz+do+Iguacu&waypoints=Cellshop+Importados,+Ciudad+del+Este&travelmode=driving",
+      5: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=Condominio+Village+San+Francisco,+Foz+do+Iguacu&waypoints=Parque+Nacional+do+Iguacu,+Foz+do+Iguacu%7CParque+das+Aves,+Foz+do+Iguacu&travelmode=driving",
       6: "https://www.google.com/maps/dir/?api=1&origin=Condominio+Village+San+Francisco,+Foz+do+Iguacu&destination=La+Feirinha,+Puerto+Iguazu&waypoints=Duty+Free+Shop+Puerto+Iguazu%7CHospedaje+Jose+Gorgues,+Puerto+Iguazu&travelmode=driving",
       7: "https://www.google.com/maps/dir/?api=1&origin=Hospedaje+Jose+Gorgues,+Puerto+Iguazu&destination=El+Quincho+del+Tio+Querido,+Puerto+Iguazu&waypoints=Parque+Nacional+Iguazu,+Puerto+Iguazu&travelmode=driving",
       8: "https://www.google.com/maps/dir/?api=1&origin=Hospedaje+Jose+Gorgues,+Puerto+Iguazu&destination=Hospedaje+Jose+Gorgues,+Puerto+Iguazu&waypoints=Hito+Tres+Fronteras,+Puerto+Iguazu%7CLa+Aripuca,+Puerto+Iguazu%7CCaminos+del+Vino,+Puerto+Iguazu&travelmode=driving",
