@@ -1,4 +1,4 @@
-const CACHE_NAME = 'triplice-frontera-cache-v41';
+const CACHE_NAME = 'triplice-frontera-cache-v42';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -19,12 +19,22 @@ const ASSETS_TO_CACHE = [
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
 
-// Install Service Worker and cache all essential static files
+// Install Service Worker and cache all essential static files (bypassing HTTP cache)
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Service Worker] Caching app shell and static assets...');
-      return cache.addAll(ASSETS_TO_CACHE);
+      console.log('[Service Worker] Caching app shell and static assets (bypassing HTTP cache)...');
+      const cachePromises = ASSETS_TO_CACHE.map((url) => {
+        const isCDN = url.startsWith('http');
+        const request = new Request(url, isCDN ? {} : { cache: 'reload' });
+        return fetch(request).then((response) => {
+          if (response.ok) {
+            return cache.put(url, response);
+          }
+          throw new Error(`Failed to fetch ${url}`);
+        });
+      });
+      return Promise.all(cachePromises);
     }).then(() => self.skipWaiting())
   );
 });
